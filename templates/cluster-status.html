@@ -1,0 +1,41 @@
+<h1>Moneta <small>Cluster Status</small></h1>
+
+<ul class="breadcrumbs">
+	<li><a dropdown-toggle="#mainmenu" aria-controls="drop1" aria-expanded="false">Moneta</a></li>
+	<li class="current"><a href="#/cluster/status">Cluster Status</a></li>
+</ul>
+<ng-include src="'templates/mainmenu.html'"></ng-include>
+
+<div class="row">
+	<div class="large-12 columns">
+		<h3>Master</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		The master node is <strong>{{ cluster.master }}</strong>.
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<h3>Nodes</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<table class="fullwidth">
+			<thead>
+					<th>Node</th>
+					<th>Address</th>
+					<th>Pool</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(node, details) in cluster.nodes">
+					<td>{{ node }}</td>
+					<td>{{ details.address }}</td>
+					<td>{{ details.pool }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

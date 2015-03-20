@@ -1,0 +1,15 @@
+.label a {
+	color: inherit;
+}
+
+.mon-taglist, .mon-taskdescription {
+	margin-bottom: 0
+}
+
+.mon-taskdescription {
+	white-space: pre-line;
+}
+
+.fullwidth {
+	 width: 100%
+}

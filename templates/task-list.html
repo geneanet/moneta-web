@@ -1,0 +1,72 @@
+<h1>Moneta <small>Task List</small></h1>
+
+<ul class="breadcrumbs">
+	<li><a dropdown-toggle="#mainmenu" aria-controls="drop1" aria-expanded="false">Moneta</a></li>
+	<li class="current"><a href="#/tasks">Tasks</a></li>
+</ul>
+<ng-include src="'templates/mainmenu.html'"></ng-include>
+
+<div class="row">
+	<div class="large-10 columns">
+		<input type="text" ng-model="query" placeholder="Filter">
+	</div>
+	<div class="large-2 columns">
+		<a class="button split tiny expand" href="#/tasks/new">
+			Add New
+			<span dropdown-toggle="#template-list"></span>
+		</a>
+
+		<ul id="template-list" class="f-dropdown">
+			<li ng-repeat="(taskid, task) in tasks | taskhastag:'template'">
+				<a ng-href="#/tasks/new/{{ ::taskid }}">{{ ::task.name }}</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="large-10 columns">
+		<input type="radio" ng-model="tagfilter" name="tagfilter" value="!template" id="showTasks"><label for="showTasks">Tasks</label>
+		<input type="radio" ng-model="tagfilter" name="tagfilter" value="template" id="showTemplates"><label for="showTemplates">Templates</label>
+	</div>
+</div>
+
+<div class="row">
+	<div class="columns large-12">
+		<table class="fullwidth">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Pool</th>
+					<th ng-hide="tagfilter == 'template'">Last execution</th>
+					<th ng-hide="tagfilter == 'template'">Enabled</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(taskid, task) in tasks | taskfilter:query | taskhastag:tagfilter">
+					<td>
+						<h4><a ng-href="#/tasks/{{::taskid}}">{{::task.name}}</a></h4>
+						<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
+						<p class="mon-taskdescription">{{::task.description}}</p>
+					</td>
+					<td>{{ ::task.pool }} ({{ ::task.mode }})</td>
+					<td ng-hide="tagfilter == 'template'">
+						<div ng-show="task.last_report">
+							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ ::task.last_report.start_time | formatDateTime }}">{{ ::task.last_report.start_time | fromNow }}</span>
+							({{ ::task.last_report.status }})
+						</div>
+						<div ng-hide="task.last_report">
+							Not executed yet
+						</div>
+					</td>
+					<td ng-hide="tagfilter == 'template'">
+						<div class="switch round small">
+							<input id="enabled-{{ ::taskid }}" type="checkbox" ng-model="task.enabled" ng-click="enableTask(taskid)">
+							<label for="enabled-{{ ::taskid }}"></label>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

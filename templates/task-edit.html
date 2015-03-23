@@ -107,12 +107,12 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="schedule in task.schedules">
-					<td>{{ schedule.month }}</td>
-					<td>{{ schedule.week }}</td>
-					<td>{{ schedule.dayofmonth }}</td>
-					<td>{{ schedule.dayofweek }}</td>
-					<td>{{ schedule.hour }}</td>
-					<td>{{ schedule.minute }}</td>
+					<td>{{ schedule.month.join(',') }}</td>
+					<td>{{ schedule.week.join(',') }}</td>
+					<td>{{ schedule.dayofmonth.join(',') }}</td>
+					<td>{{ schedule.dayofweek.join(',') }}</td>
+					<td>{{ schedule.hour.join(',') }}</td>
+					<td>{{ schedule.minute.join(',') }}</td>
 					<td><a ng-click="removeSchedule($index)">&#x2716;</a></td>
 				</tr>
 			</tbody>
@@ -127,13 +127,13 @@
 	 		<label for="month" class="right inline">Month</label>
 		</div>
 		<div class="large-4 columns">
-			<input type="text" id="month" placeholder="Month" ng-model="newSchedule.month">
+			<input type="text" id="month" placeholder="Month" ng-model="newSchedule.month" ng-list>
 		</div>
 		<div class="large-2 columns">
 	 		<label for="week" class="right inline">Week</label>
 		</div>
 		<div class="large-4 columns">
-			<input type="text" id="week" placeholder="Week" ng-model="newSchedule.week">
+			<input type="text" id="week" placeholder="Week" ng-model="newSchedule.week" ng-list>
 		</div>
 	</div>
 	<div class="row">
@@ -141,13 +141,13 @@
 	 		<label for="dayofmonth" class="right inline">Day of Month</label>
 		</div>
 		<div class="large-4 columns">
-			<input type="text" id="dayofmonth" placeholder="Day of Month" ng-model="newSchedule.dayofmonth">
+			<input type="text" id="dayofmonth" placeholder="Day of Month" ng-model="newSchedule.dayofmonth" ng-list>
 		</div>
 		<div class="large-2 columns">
 	 		<label for="dayofweek" class="right inline">Day of Week</label>
 		</div>
 		<div class="large-4 columns">
-			<input type="text" id="dayofweek" placeholder="Day of Week" ng-model="newSchedule.dayofweek">
+			<input type="text" id="dayofweek" placeholder="Day of Week" ng-model="newSchedule.dayofweek" ng-list>
 		</div>
 	</div>
 	<div class="row">
@@ -155,13 +155,13 @@
 	 		<label for="hour" class="right inline">Hour</label>
 		</div>
 		<div class="large-4 columns">
-			<input type="text" id="hour" placeholder="Hour" ng-model="newSchedule.hour">
+			<input type="text" id="hour" placeholder="Hour" ng-model="newSchedule.hour" ng-list>
 		</div>
 		<div class="large-2 columns">
 	 		<label for="minute" class="right inline">Minute</label>
 		</div>
 		<div class="large-4 columns">
-			<input type="text" id="minute" placeholder="Minute" ng-model="newSchedule.minute">
+			<input type="text" id="minute" placeholder="Minute" ng-model="newSchedule.minute" ng-list>
 		</div>
 	</div>
 	<div class="row">

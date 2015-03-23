@@ -82,6 +82,20 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams',
 		$scope.task.tags.push(tag);
 	};
 
+	$scope.removePool = function(pool) {
+		var index = $scope.task.pools.indexOf(pool);
+		$scope.task.pools.splice(index, 1);
+	};
+
+	$scope.addPool = function(pool) {
+		pool = pool.trim();
+
+		if (($scope.task.pools.indexOf(pool) > -1) || (pool == ''))
+			return;
+
+		$scope.task.pools.push(pool);
+	};
+
 	$scope.removeSchedule = function(index) {
 		$scope.task.schedules.splice(index, 1);
 	};
@@ -144,7 +158,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams',
 				'schedules': [],
 				'mailto': [],
 				'mode': 'any',
-				'pool': 'default',
+				'pools': [ 'default' ],
 				'mailreport': 'never'
 			}
 		}

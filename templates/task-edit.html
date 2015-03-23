@@ -61,12 +61,27 @@
 <div class="row">
 	<div class="large-6 columns">
 		<select ng-model="task.mode">
-			<option value="any" default>Any server in the pool</option>
-			<option value="all">Every server in the pool</option>
+			<option value="any" default>Any server in the pool(s)</option>
+			<option value="all">Every server in the pool(s)</option>
 		</select>
 	</div>
 	<div class="large-6 columns">
-		<input type="text" ng-model="task.pool" typeahead="pool for pool in pools | filter:$viewValue | limitTo:8" placeholder="Pool" class="form-control">
+		<form ng-submit="addPool(newpool); newpool = '';">
+			<div class="row collapse">
+				<div class="large-11 columns">
+					<input type="text" ng-model="newpool" typeahead="pool for pool in pools | filter:$viewValue | limitTo:8" placeholder="Pool" class="form-control">
+				</div>
+				<div class="large-1 columns">
+					<button ng-disabled="!newpool" type="submit" class="tiny expand">Add</button>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="large-12 columns">
+				<span ng-repeat="pool in task.pools"><span class="radius label">{{pool}} <a ng-click="removePool(pool)">&#x2716;</a></span> </span>
+			</div>
+		</div>
+
 	</div>
 </div>
 

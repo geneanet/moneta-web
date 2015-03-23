@@ -49,7 +49,7 @@
 						<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
 						<p class="mon-taskdescription">{{::task.description}}</p>
 					</td>
-					<td>{{ ::task.pool }} ({{ ::task.mode }})</td>
+					<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
 					<td ng-hide="tagfilter == 'template'">
 						<div ng-show="task.last_report">
 							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ ::task.last_report.start_time | formatDateTime }}">{{ ::task.last_report.start_time | fromNow }}</span>

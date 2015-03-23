@@ -3,6 +3,7 @@ var monetaApp = angular.module('monetaApp', [
 	'monetaControllers',
 	'monetaFilters',
 	'monetaServices',
+	'formValidation',
 	'mm.foundation'
 ]);
 

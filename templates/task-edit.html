@@ -7,273 +7,275 @@
 </ul>
 <ng-include src="'templates/mainmenu.html'"></ng-include>
 
-<div class="row">
-	<div class="large-12 columns">
-		<div class="switch round right">
-			<input id="enabled" type="checkbox" ng-model="task.enabled">
-			<label for="enabled"></label>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns">
-		<h3>Description</h3>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns">
-		<input type="text" ng-model="task.name" placeholder="Name">
-	</div>
-</div>
-<div class="row">
-	<div class="large-12 columns">
-		<textarea rows="3" ng-model="task.description" placeholder="Description"></textarea>
-	</div>
-</div>
-<div class="row">
-	<div class="large-12 columns">
-		<form ng-submit="addTag(newtag); newtag = '';">
-			<div class="row collapse">
-				<div class="large-11 columns">
-					<input type="text" ng-model="newtag" typeahead="tag for tag in tags | filter:$viewValue | limitTo:8" placeholder="Tag" class="form-control">
-				</div>
-				<div class="large-1 columns">
-					<button ng-disabled="!newtag" type="submit" class="tiny expand">Add</button>
-				</div>
-			</div>
-		</form>
-		<div class="row">
-			<div class="large-12 columns">
-				<span ng-repeat="tag in task.tags"><span class="radius label">{{tag}} <a ng-click="removeTag(tag)">&#x2716;</a></span> </span>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns">
-		<h3>Execution mode</h3>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-6 columns">
-		<select ng-model="task.mode">
-			<option value="any" default>Any server in the pool(s)</option>
-			<option value="all">Every server in the pool(s)</option>
-		</select>
-	</div>
-	<div class="large-6 columns">
-		<form ng-submit="addPool(newpool); newpool = '';">
-			<div class="row collapse">
-				<div class="large-11 columns">
-					<input type="text" ng-model="newpool" typeahead="pool for pool in pools | filter:$viewValue | limitTo:8" placeholder="Pool" class="form-control">
-				</div>
-				<div class="large-1 columns">
-					<button ng-disabled="!newpool" type="submit" class="tiny expand">Add</button>
-				</div>
-			</div>
-		</form>
-		<div class="row">
-			<div class="large-12 columns">
-				<span ng-repeat="pool in task.pools"><span class="radius label">{{pool}} <a ng-click="removePool(pool)">&#x2716;</a></span> </span>
-			</div>
-		</div>
-
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns">
-		<h3>Schedule</h3>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns">
-		<table class="large-12">
-			<thead>
-				<tr>
-					<th>Month</th>
-					<th>Week</th>
-					<th>Day of Month</th>
-					<th>Day of week</th>
-					<th>Hour</th>
-					<th>Minute</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="schedule in task.schedules">
-					<td>{{ schedule.month.join(',') }}</td>
-					<td>{{ schedule.week.join(',') }}</td>
-					<td>{{ schedule.dayofmonth.join(',') }}</td>
-					<td>{{ schedule.dayofweek.join(',') }}</td>
-					<td>{{ schedule.hour.join(',') }}</td>
-					<td>{{ schedule.minute.join(',') }}</td>
-					<td><a ng-click="removeSchedule($index)">&#x2716;</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-
-
-<form ng-submit="addSchedule(newSchedule); newSchedule = null">
+<ng-form name="taskForm">
 	<div class="row">
-		<div class="large-2 columns">
-	 		<label for="month" class="right inline">Month</label>
-		</div>
-		<div class="large-4 columns">
-			<input type="text" id="month" placeholder="Month" ng-model="newSchedule.month" ng-list>
-		</div>
-		<div class="large-2 columns">
-	 		<label for="week" class="right inline">Week</label>
-		</div>
-		<div class="large-4 columns">
-			<input type="text" id="week" placeholder="Week" ng-model="newSchedule.week" ng-list>
+		<div class="large-12 columns">
+			<div class="switch round right">
+				<input id="enabled" type="checkbox" ng-model="task.enabled">
+				<label for="enabled"></label>
+			</div>
 		</div>
 	</div>
+
 	<div class="row">
-		<div class="large-2 columns">
-	 		<label for="dayofmonth" class="right inline">Day of Month</label>
-		</div>
-		<div class="large-4 columns">
-			<input type="text" id="dayofmonth" placeholder="Day of Month" ng-model="newSchedule.dayofmonth" ng-list>
-		</div>
-		<div class="large-2 columns">
-	 		<label for="dayofweek" class="right inline">Day of Week</label>
-		</div>
-		<div class="large-4 columns">
-			<input type="text" id="dayofweek" placeholder="Day of Week" ng-model="newSchedule.dayofweek" ng-list>
+		<div class="large-12 columns">
+			<h3>Description</h3>
 		</div>
 	</div>
+
 	<div class="row">
-		<div class="large-2 columns">
-	 		<label for="hour" class="right inline">Hour</label>
-		</div>
-		<div class="large-4 columns">
-			<input type="text" id="hour" placeholder="Hour" ng-model="newSchedule.hour" ng-list>
-		</div>
-		<div class="large-2 columns">
-	 		<label for="minute" class="right inline">Minute</label>
-		</div>
-		<div class="large-4 columns">
-			<input type="text" id="minute" placeholder="Minute" ng-model="newSchedule.minute" ng-list>
+		<div class="large-12 columns">
+			<input type="text" required ng-model="task.name" placeholder="Name">
 		</div>
 	</div>
 	<div class="row">
 		<div class="large-12 columns">
-			<button type="submit" class="small right">Add schedule</button>
+			<textarea rows="3" ng-model="task.description" placeholder="Description"></textarea>
 		</div>
 	</div>
-</form>
+	<div class="row">
+		<div class="large-12 columns">
+			<form novalidate ng-submit="addTag(newtag); newtag = '';">
+				<div class="row collapse">
+					<div class="large-11 columns">
+						<input type="text" validate-word ng-model="newtag" typeahead="tag for tag in tags | filter:$viewValue | limitTo:8" placeholder="Tag" class="form-control">
+					</div>
+					<div class="large-1 columns">
+						<button ng-disabled="!newtag" type="submit" class="tiny expand">Add</button>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+				<div class="large-12 columns">
+					<span ng-repeat="tag in task.tags"><span class="radius label">{{tag}} <a ng-click="removeTag(tag)">&#x2716;</a></span> </span>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div class="row">
-	<div class="large-12 columns">
-		<h3>Command</h3>
+	<div class="row">
+		<div class="large-12 columns">
+			<h3>Execution mode</h3>
+		</div>
 	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns">
-		<label>Command <input type="text" ng-model="task.command" placeholder="command"></label>
+	<div class="row">
+		<div class="large-6 columns">
+			<select ng-model="task.mode">
+				<option value="any" default>Any server in the pool(s)</option>
+				<option value="all">Every server in the pool(s)</option>
+			</select>
+		</div>
+		<div class="large-6 columns">
+			<form novalidate ng-submit="addPool(newpool); newpool = '';">
+				<div class="row collapse">
+					<div class="large-11 columns">
+						<input type="text" validate-word ng-model="newpool" typeahead="pool for pool in pools | filter:$viewValue | limitTo:8" placeholder="Pool" class="form-control">
+					</div>
+					<div class="large-1 columns">
+						<button ng-disabled="!newpool" type="submit" class="tiny expand">Add</button>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+				<div class="large-12 columns">
+					<span ng-repeat="pool in task.pools"><span class="radius label">{{pool}} <a ng-click="removePool(pool)">&#x2716;</a></span> </span>
+				</div>
+			</div>
+
+		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="large-12 columns">
-		<label>Working directory <input type="text" ng-model="task.workdir" placeholder="Working directory"></label>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<h3>Schedule</h3>
+		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="large-6 columns">
-		<label>User <input type="text" ng-model="task.user" placeholder="User"></label>
-	</div>
-	<div class="large-6 columns">
-		<label>Group <input type="text" ng-model="task.group" placeholder="Group"></label>
-	</div>
-</div>
-<div class="row">
-	<div class="large-12 columns">
-		<label>Environment</label>
-		<form ng-submit="setEnv(envvar.name, envvar.value); envvar = null;">
+
+	<div class="row">
+		<div class="large-12 columns">
 			<table class="large-12">
 				<thead>
 					<tr>
-						<th>Variable</th>
-						<th>Value</th>
+						<th>Month</th>
+						<th>Week</th>
+						<th>Day of Month</th>
+						<th>Day of week</th>
+						<th>Hour</th>
+						<th>Minute</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="(var, value) in task.env">
-						<td>{{ var }}</td>
-						<td>{{ value }}</td>
-						<td><a ng-click="removeEnv(var)">&#x2716;</a></td>
-					</tr>
-					<tr>
-						<td><input type="text" ng-model="envvar.name" placeholder="Variable name"></td>
-						<td><input type="text" ng-model="envvar.value" placeholder="Value"></td>
-						<td><button ng-disabled="!envvar.name" type="submit" class="tiny expand">Add/Update</button></td>
+					<tr ng-repeat="schedule in task.schedules">
+						<td>{{ schedule.month.join(',') }}</td>
+						<td>{{ schedule.week.join(',') }}</td>
+						<td>{{ schedule.dayofmonth.join(',') }}</td>
+						<td>{{ schedule.dayofweek.join(',') }}</td>
+						<td>{{ schedule.hour.join(',') }}</td>
+						<td>{{ schedule.minute.join(',') }}</td>
+						<td><a ng-click="removeSchedule($index)">&#x2716;</a></td>
 					</tr>
 				</tbody>
 			</table>
-		</form>
+		</div>
 	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns">
-		<h3>Reporting</h3>
-	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns">
-		<label>Send a report by mail
-			<select ng-model="task.mailreport">
-				<option value="error" default>On error</option>
-				<option value="always">Always</option>
-				<option value="never">Never</option>
-			</select>
-		</label>
-	</div>
-</div>
+	<form name ="scheduleForm" novalidate ng-submit="addSchedule(newSchedule); newSchedule = null">
+		<div class="row">
+			<div class="large-2 columns">
+		 		<label for="month" class="right inline">Month</label>
+			</div>
+			<div class="large-4 columns">
+				<input type="text" validate-schedule id="month" placeholder="Month" ng-model="newSchedule.month" ng-list>
+			</div>
+			<div class="large-2 columns">
+		 		<label for="week" class="right inline">Week</label>
+			</div>
+			<div class="large-4 columns">
+				<input type="text" validate-schedule id="week" placeholder="Week" ng-model="newSchedule.week" ng-list>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-2 columns">
+		 		<label for="dayofmonth" class="right inline">Day of Month</label>
+			</div>
+			<div class="large-4 columns">
+				<input type="text" validate-schedule id="dayofmonth" placeholder="Day of Month" ng-model="newSchedule.dayofmonth" ng-list>
+			</div>
+			<div class="large-2 columns">
+		 		<label for="dayofweek" class="right inline">Day of Week</label>
+			</div>
+			<div class="large-4 columns">
+				<input type="text" validate-schedule id="dayofweek" placeholder="Day of Week" ng-model="newSchedule.dayofweek" ng-list>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-2 columns">
+		 		<label for="hour" class="right inline">Hour</label>
+			</div>
+			<div class="large-4 columns">
+				<input type="text" validate-schedule id="hour" placeholder="Hour" ng-model="newSchedule.hour" ng-list>
+			</div>
+			<div class="large-2 columns">
+		 		<label for="minute" class="right inline">Minute</label>
+			</div>
+			<div class="large-4 columns">
+				<input type="text" validate-schedule id="minute" placeholder="Minute" ng-model="newSchedule.minute" ng-list>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<button type="submit" class="small right" ng-disabled="scheduleForm.$invalid">Add schedule</button>
+			</div>
+		</div>
+	</form>
 
-<div ng-hide="task.mailreport == 'never'">
 	<div class="row">
 		<div class="large-12 columns">
-			<label>Recipients</label>
+			<h3>Command</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<label>Command <input type="text" ng-model="task.command" placeholder="command"></label>
 		</div>
 	</div>
 	<div class="row">
 		<div class="large-12 columns">
-			<ul class="no-bullet">
-				<li ng-repeat="recipient in task.mailto"><a ng-click="removeEMail($index)">&#x2716;</a> {{ recipient }}</li>
-			</ul>
+			<label>Working directory <input type="text" ng-model="task.workdir" placeholder="Working directory"></label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-6 columns">
+			<label>User <input type="text" validate-word ng-model="task.user" placeholder="User"></label>
+		</div>
+		<div class="large-6 columns">
+			<label>Group <input type="text" validate-word ng-model="task.group" placeholder="Group"></label>
 		</div>
 	</div>
 	<div class="row">
 		<div class="large-12 columns">
-			<form ng-submit="addEMail(newmail); newmail = '';">
-				<div class="row collapse">
-					<div class="large-11 columns">
-						<input type="text" ng-model="newmail" placeholder="EMail Address">
-					</div>
-					<div class="large-1 columns">
-						<button type="submit" ng-disabled="!newmail" class="button tiny expand">Add</button>
-					</div>
-				</div>
+			<label>Environment</label>
+			<form novalidate ng-submit="setEnv(envvar.name, envvar.value); envvar = null;">
+				<table class="large-12">
+					<thead>
+						<tr>
+							<th>Variable</th>
+							<th>Value</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(var, value) in task.env">
+							<td>{{ var }}</td>
+							<td>{{ value }}</td>
+							<td><a ng-click="removeEnv(var)">&#x2716;</a></td>
+						</tr>
+						<tr>
+							<td><input type="text" validate-word ng-model="envvar.name" placeholder="Variable name"></td>
+							<td><input type="text" ng-model="envvar.value" placeholder="Value"></td>
+							<td><button ng-disabled="!envvar.name" type="submit" class="tiny expand">Add/Update</button></td>
+						</tr>
+					</tbody>
+				</table>
 			</form>
 		</div>
 	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns text-right">
-		<button class="button alert left" ng-click="deleteTask()" ng-hide="taskId == 'new'">Delete</button>
-		<button class="button success" ng-click="saveTask()" ng-disabled="!task.name">Save</button>
+	<div class="row">
+		<div class="large-12 columns">
+			<h3>Reporting</h3>
+		</div>
 	</div>
-</div>
+
+	<div class="row">
+		<div class="large-12 columns">
+			<label>Send a report by mail
+				<select ng-model="task.mailreport">
+					<option value="error" default>On error</option>
+					<option value="always">Always</option>
+					<option value="never">Never</option>
+				</select>
+			</label>
+		</div>
+	</div>
+
+	<div ng-hide="task.mailreport == 'never'">
+		<div class="row">
+			<div class="large-12 columns">
+				<label>Recipients</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<ul class="no-bullet">
+					<li ng-repeat="recipient in task.mailto"><a ng-click="removeEMail($index)">&#x2716;</a> {{ recipient }}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<form novalidate ng-submit="addEMail(newmail); newmail = '';">
+					<div class="row collapse">
+						<div class="large-11 columns">
+							<input type="email" ng-model="newmail" placeholder="EMail Address">
+						</div>
+						<div class="large-1 columns">
+							<button type="submit" ng-disabled="!newmail" class="button tiny expand">Add</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="large-12 columns text-right">
+			<button class="button alert left" ng-click="deleteTask()" ng-hide="taskId == 'new'">Delete</button>
+			<button class="button success" ng-click="saveTask()" ng-disabled="taskForm.$invalid">Save</button>
+		</div>
+	</div>
+</ng-form>

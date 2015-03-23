@@ -10,14 +10,15 @@
 	<div class="large-10 columns">
 		<input type="text" ng-model="query" placeholder="Filter">
 	</div>
+
 	<div class="large-2 columns">
-		<a class="button split tiny expand" href="#/tasks/new">
+		<a class="button split tiny expand" ng-class="{'split': !(templates &amp;&amp; ( templates | keyLength ) == 0)}" href="#/tasks/new">
 			Add New
-			<span dropdown-toggle="#template-list"></span>
+			<span dropdown-toggle="#template-list" ng-if="!(templates &amp;&amp; ( templates | keyLength ) == 0)"></span>
 		</a>
 
 		<ul id="template-list" class="f-dropdown">
-			<li ng-repeat="(taskid, task) in tasks | taskhastag:'template'">
+			<li ng-repeat="(taskid, task) in templates = (tasks | taskhastag:'template')">
 				<a ng-href="#/tasks/new/{{ ::taskid }}">{{ ::task.name }}</a>
 			</li>
 		</ul>

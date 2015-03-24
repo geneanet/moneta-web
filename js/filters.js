@@ -6,19 +6,21 @@ monetaFilters.filter('taskfilter', function ($filter) {
 			return items;
 		}
 
+		expression = expression.toLowerCase()
+
 		var result = {};
 
 		angular.forEach(items, function(task, taskid) {
-			if (task.name.indexOf(expression) > -1) {
+			if (task.name.toLowerCase().indexOf(expression) > -1) {
 				result[taskid] = task;
 				return;
 			}
 
 			angular.forEach(task.tags, function(tag) {
-	        	if (tag.indexOf(expression) > -1) {
-		            result[taskid] = task;
-		            return;
-	        	}
+				if (tag.toLowerCase().indexOf(expression) > -1) {
+					result[taskid] = task;
+					return;
+				}
 			});
 		});
 
@@ -70,10 +72,10 @@ monetaFilters.filter('formatDateTime', function() {
 
 
 monetaFilters.filter('keyLength', function(){
-    return function(input){
-        if(!angular.isObject(input)) {
-            throw Error("Usage of non-objects with keylength filter!!")
-        }
-        return Object.keys(input).length;
-    }
+	return function(input){
+		if(!angular.isObject(input)) {
+			throw Error("Usage of non-objects with keylength filter!!")
+		}
+		return Object.keys(input).length;
+	}
 });

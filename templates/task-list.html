@@ -46,7 +46,7 @@
 			<tbody>
 				<tr ng-repeat="(taskid, task) in tasks | taskfilter:query | taskhastag:tagfilter">
 					<td>
-						<h4><a ng-href="#/tasks/{{::taskid}}">{{::task.name}}</a></h4>
+						<h4 class="mon-taskname"><a ng-href="#/tasks/{{::taskid}}">{{::task.name}}</a></h4>
 						<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
 						<p class="mon-taskdescription">{{::task.description}}</p>
 					</td>

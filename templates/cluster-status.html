@@ -13,7 +13,7 @@
 </div>
 <div class="row">
 	<div class="large-12 columns">
-		The master node is <strong>{{ cluster.master }}</strong>.
+		The master node is <strong>{{ ::cluster.master }}</strong>.
 	</div>
 </div>
 <div class="row">
@@ -27,13 +27,13 @@
 			<thead>
 					<th>Node</th>
 					<th>Address</th>
-					<th>Pool</th>
+					<th>Pools</th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="(node, details) in cluster.nodes">
-					<td>{{ node }}</td>
-					<td>{{ details.address }}</td>
-					<td>{{ details.pool }}</td>
+					<td>{{ ::node }}</td>
+					<td>{{ ::details.address }}</td>
+					<td><span ng-repeat="pool in details.pools">{{ ::pool }}<span ng-if="!$last">, </span></span></td>
 				</tr>
 			</tbody>
 		</table>

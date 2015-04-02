@@ -9,7 +9,7 @@ var monetaApp = angular.module('monetaApp', [
 
 monetaApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/cluster/status', {
+		when('/cluster', {
 			templateUrl: 'templates/cluster-status.html',
 			controller: 'ClusterStatusCtrl'
 		}).

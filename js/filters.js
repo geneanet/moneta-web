@@ -74,7 +74,7 @@ monetaFilters.filter('formatDateTime', function() {
 monetaFilters.filter('keyLength', function(){
 	return function(input){
 		if(!angular.isObject(input)) {
-			throw Error("Usage of non-objects with keylength filter!!")
+			return 0;
 		}
 		return Object.keys(input).length;
 	}

@@ -12,6 +12,27 @@ monetaControllers.controller('ModalDialogCtrl', [ '$scope', '$modalInstance', 'm
 monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {
 	$http.get(config.backend + '/cluster/status').success(function(data, status, headers, config) {
 		$scope.cluster = data;
+		$scope.processes = {}
+
+		angular.forEach($scope.cluster['nodes'], function(value, key) {
+			address = value['address'];
+
+			$http.get('http://' + address + '/status').success(function(data, status, headers, config) {
+				$scope.cluster['nodes'][key]['status'] = data
+
+				angular.forEach(data['running_processes'], function(value, key) {
+					$scope.processes[key] = {
+						'node': data['name'],
+						'started': value['started'],
+						'task': value['task']
+					}
+				});
+			});
+		});
+	});
+
+	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
+		$scope.tasks = data;
 	});
 }]);
 

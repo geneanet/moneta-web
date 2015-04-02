@@ -28,12 +28,37 @@
 					<th>Node</th>
 					<th>Address</th>
 					<th>Pools</th>
+					<th>Running Processes</th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="(node, details) in cluster.nodes">
 					<td>{{ ::node }}</td>
 					<td>{{ ::details.address }}</td>
 					<td><span ng-repeat="pool in details.pools">{{ ::pool }}<span ng-if="!$last">, </span></span></td>
+					<td>{{ ::details.status.running_processes | keyLength }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<h3>Running Processes</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<table class="fullwidth">
+			<thead>
+					<th>Node</th>
+					<th>Task</th>
+					<th>Started</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="process in processes">
+					<td>{{ ::process.node }}</td>
+					<td><a ng-href="#/tasks/{{ ::process.task }}">{{ ::tasks[process.task].name }}</a></td>
+					<td>{{ ::process.started | fromNow }}</td>
 				</tr>
 			</tbody>
 		</table>

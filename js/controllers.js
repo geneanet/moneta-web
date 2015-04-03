@@ -36,6 +36,18 @@ monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 
 	});
 }]);
 
+monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$routeParams', 'config', function ($scope, $http, $routeParams, config) {
+	$scope.nodename = $routeParams.node
+	
+	$http.get(config.backend + '/cluster/status').success(function(data, status, headers, config) {
+		$scope.cluster = data;
+
+		$http.get('http://' + $scope.cluster.nodes[$routeParams.node]['address'] + '/status').success(function(data, status, headers, config) {
+			$scope.node = data;
+		});
+	});
+}]);
+
 monetaControllers.controller('TaskListCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {
 	$scope.tagfilter = '!template'
 

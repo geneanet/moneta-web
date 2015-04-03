@@ -13,6 +13,10 @@ monetaApp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'templates/cluster-status.html',
 			controller: 'ClusterStatusCtrl'
 		}).
+		when('/cluster/node/:node', {
+			templateUrl: 'templates/node-status.html',
+			controller: 'NodeStatusCtrl'
+		}).
 		when('/tasks', {
 			templateUrl: 'templates/task-list.html',
 			controller: 'TaskListCtrl'

@@ -1,0 +1,61 @@
+<h1>Moneta <small>Node {{ ::nodename }} Status</small></h1>
+
+<ul class="breadcrumbs">
+	<li><a dropdown-toggle="#mainmenu" aria-controls="drop1" aria-expanded="false">Moneta</a></li>
+	<li><a href="#/cluster">Cluster</a></li>
+	<li class="current"><a href="#/cluster">{{ ::nodename }}</a></li>
+</ul>
+<ng-include src="'templates/mainmenu.html'"></ng-include>
+
+<div class="row">
+	<div class="large-12 columns">
+		<h3>State</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<ul>
+			<li><strong>Cluster joined:</strong> {{ ::node.cluster_joined }}</li>
+			<li><strong>Contending for lead:</strong> {{ ::node.contending_for_lead }}</li>
+			<li><strong>Pools joined:</strong> {{ ::node.pools_joined }}</li>
+			<li><strong>Scheduler running:</strong> {{ ::node.scheduler_running }}</li>
+			<li><strong>Execution enabled:</strong> {{ ::node.execution_enabled }}</li>
+			<li><strong>Master:</strong> {{ ::node.master }}</li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<h3>Configuration</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<ul>
+			<li><strong>Name:</strong> {{ ::node.name }}</li>
+			<li><strong>Address:</strong> {{ ::node.address }}</li>
+			<li><strong>Pools:</strong> <span ng-repeat="pool in node.pools">{{ ::pool }}<span ng-if="!$last">, </span></span></li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<h3>Running Processes</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<table class="fullwidth">
+			<thead>
+					<th>Task</th>
+					<th>Started</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="process in node.running_processes">
+					<td><a ng-href="#/tasks/{{ ::process.task }}">{{ ::tasks[process.task].name }}</a></td>
+					<td>{{ ::process.started | fromNow }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

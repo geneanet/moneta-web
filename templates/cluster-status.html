@@ -35,7 +35,7 @@
 					<td><a ng-href="#/cluster/node/{{ ::node }}">{{ ::node }}</a></td>
 					<td>{{ ::details.address }}</td>
 					<td><span ng-repeat="pool in details.pools">{{ ::pool }}<span ng-if="!$last">, </span></span></td>
-					<td>{{ ::details.status.running_processes | keyLength }}</td>
+					<td>{{ details.status.running_processes | keyLength }}</td>
 				</tr>
 			</tbody>
 		</table>

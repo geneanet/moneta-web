@@ -236,6 +236,9 @@
 			<label>Send a report by mail
 				<select ng-model="task.mailreport">
 					<option value="error" default>On error</option>
+					<option value="stderr">On output on stderr</option>
+					<option value="stdout">On output on stdout</option>
+					<option value="output">On any output</option>
 					<option value="always">Always</option>
 					<option value="never">Never</option>
 				</select>

@@ -39,7 +39,7 @@
 				<tr>
 					<th>Name</th>
 					<th>Pools</th>
-					<th ng-hide="tagfilter == 'template'">Last execution</th>
+					<th ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">Last execution</th>
 					<th ng-hide="tagfilter == 'template'">Enabled</th>
 				</tr>
 			</thead>
@@ -51,12 +51,12 @@
 						<p class="mon-taskdescription">{{::task.description}}</p>
 					</td>
 					<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
-					<td ng-hide="tagfilter == 'template'">
-						<div ng-show="task.last_report">
-							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ ::task.last_report.start_time | formatDateTime }}">{{ ::task.last_report.start_time | fromNow }}</span>
-							({{ ::task.last_report.status }})
+					<td ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">
+						<div ng-show="executionsummary[taskid]">
+							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ ::executionsummary[taskid].start_time | formatDateTime }}">{{ ::executionsummary[taskid].start_time | fromNow }}</span>
+							({{ ::executionsummary[taskid].status }})
 						</div>
-						<div ng-hide="task.last_report">
+						<div ng-hide="executionsummary[taskid]">
 							Not executed yet
 						</div>
 					</td>

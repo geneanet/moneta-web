@@ -51,6 +51,16 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', 'config', funct
 		$scope.tasks = data;
 	});
 
+	$http.get(config.backend + '/plugins').success(function(data, status, headers) {
+		$scope.plugins = data;
+
+		if (data.indexOf('executionsummary') > -1) {
+			$http.get(config.backend + '/executionsummary').success(function(data, status, headers) {
+				$scope.executionsummary = data;
+			});
+		}
+	});
+
 	$scope.enableTask = function(taskId) {
 		if ($scope.tasks[taskId].enabled)
 			action = "enable";

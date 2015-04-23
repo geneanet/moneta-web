@@ -53,8 +53,8 @@
 					<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
 					<td ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">
 						<div ng-show="executionsummary[taskid]">
-							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ ::executionsummary[taskid].start_time | formatDateTime }}">{{ ::executionsummary[taskid].start_time | fromNow }}</span>
-							({{ ::executionsummary[taskid].status }})
+							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ executionsummary[taskid].start_time | formatDateTime }} -> {{ executionsummary[taskid].end_time | formatDateTime }} (Duration {{ executionsummary[taskid].duration | formatDuration }})">{{ executionsummary[taskid].start_time | fromNow }}</span>
+							({{ executionsummary[taskid].status }})
 						</div>
 						<div ng-hide="executionsummary[taskid]">
 							Not executed yet

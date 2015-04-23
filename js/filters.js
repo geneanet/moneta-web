@@ -70,6 +70,11 @@ monetaFilters.filter('formatDateTime', function() {
 	}
 });
 
+monetaFilters.filter('formatDuration', function() {
+	return function(duration) {
+		return moment.duration(duration * 1000).humanize();
+	}
+});
 
 monetaFilters.filter('keyLength', function(){
 	return function(input){

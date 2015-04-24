@@ -19,7 +19,8 @@ monetaApp.config(['$routeProvider', function($routeProvider) {
 		}).
 		when('/tasks', {
 			templateUrl: 'templates/task-list.html',
-			controller: 'TaskListCtrl'
+			controller: 'TaskListCtrl',
+			reloadOnSearch: false
 		}).
 		when('/tasks/:taskId/:templateId', {
 			templateUrl: 'templates/task-edit.html',

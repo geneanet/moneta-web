@@ -44,7 +44,7 @@ monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$routeParams
 	});
 }]);
 
-monetaControllers.controller('TaskListCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {
+monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams', '$location', 'config', function ($scope, $http, $routeParams, $location, config) {
 	$scope.tagfilter = '!template'
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
@@ -72,6 +72,11 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', 'config', funct
 			});
 	};
 
+	$scope.filter = $routeParams.filter;
+
+	$scope.$watch('filter', function(newVal, oldVal) {
+		$location.search('filter', newVal);
+	});
 }]);
 
 monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', 'config', function ($scope, $http, $routeParams, $location, $modal, config) {

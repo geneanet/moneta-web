@@ -1,0 +1,6 @@
+{
+    "name": "geneanet/moneta-web",
+    "license": "BSD",
+    "type": "project",
+    "description": "Web GUI for Moneta task scheduler"
+}

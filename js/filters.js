@@ -8,7 +8,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 
 		expression = expression.toLowerCase().split(" ")
 
-		var result = {};
+		var result = [];
 
 		function match_tag(task, tag)
 		{
@@ -18,7 +18,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 					return true;
 			}
 
-			return false;		
+			return false;
 		}
 
 		function match_title(task, title)
@@ -63,7 +63,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 				}
 			}
 
-			result[taskid] = task;
+			result.push(task);
 		});
 
 		return result;
@@ -84,13 +84,13 @@ monetaFilters.filter('taskhastag', function ($filter) {
 			negate = false;
 		}
 
-		var result = {};
+		var result = [];
 
 		angular.forEach(items, function(task, taskid) {
 			hastag = task.tags.indexOf(expression) > -1;
 
 			if (!negate && hastag || negate && !hastag) {
-				result[taskid] = task;
+				result.push(task);
 				return;
 			}
 		});
@@ -124,5 +124,19 @@ monetaFilters.filter('keyLength', function(){
 			return 0;
 		}
 		return Object.keys(input).length;
+	}
+});
+
+monetaFilters.filter('offset', function(){
+	return function(input, offset){
+		offset = parseInt(offset);
+		return input.slice(offset);
+	}
+});
+
+monetaFilters.filter('paginate', function(){
+	return function(input, itemsperpage){
+		var pages = Math.ceil(input.length / itemsperpage);
+		return Array.apply(null, Array(pages)).map(function (_, i) {return i;});
 	}
 });

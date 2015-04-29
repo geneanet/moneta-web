@@ -44,11 +44,19 @@ monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$routeParams
 	});
 }]);
 
-monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams', '$location', 'config', function ($scope, $http, $routeParams, $location, config) {
+monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams', '$location', '$window', 'config', function ($scope, $http, $routeParams, $location, $window, config) {
 	$scope.tagfilter = '!template'
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
-		$scope.tasks = data;
+		arraydata = [];
+
+		angular.forEach(data, function(task, taskid) {
+			task['id'] = taskid;
+			arraydata.push(task);
+		});
+
+
+		$scope.tasks = arraydata;
 	});
 
 	$http.get(config.backend + '/plugins').success(function(data, status, headers) {
@@ -61,13 +69,13 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams',
 		}
 	});
 
-	$scope.enableTask = function(taskId) {
-		if ($scope.tasks[taskId].enabled)
+	$scope.enableTask = function(task) {
+		if (task.enabled)
 			action = "enable";
 		else
 			action = "disable";
 
-		$http.post(config.backend + '/tasks/' + taskId + '/' + action).error(function(data, status, headers, config) {
+		$http.post(config.backend + '/tasks/' + task.id + '/' + action).error(function(data, status, headers, config) {
 				alert('Fail !')
 			});
 	};
@@ -76,6 +84,19 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams',
 
 	$scope.$watch('filter', function(newVal, oldVal) {
 		$location.search('filter', newVal);
+		$scope.currentpage = 0;
+	});
+
+	$scope.currentpage = 0;
+	$scope.tasksperpage = 25;
+
+	$scope.changePage = function(page) {
+		$scope.currentpage = page;
+		$window.scrollTo(0,0);
+	};
+
+	$scope.$watch('tagfilter', function(newVal, oldVal) {
+		$scope.currentpage = 0;
 	});
 }]);
 

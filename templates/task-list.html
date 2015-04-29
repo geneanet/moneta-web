@@ -12,14 +12,14 @@
 	</div>
 
 	<div class="large-2 columns">
-		<a class="button split tiny expand" ng-class="{'split': !(templates &amp;&amp; ( templates | keyLength ) == 0)}" href="#/tasks/new">
+		<a class="button split tiny expand" ng-class="{'split': !(templates &amp;&amp; ( templates.length ) == 0)}" href="#/tasks/new">
 			Add New
-			<span dropdown-toggle="#template-list" ng-if="!(templates &amp;&amp; ( templates | keyLength ) == 0)"></span>
+			<span dropdown-toggle="#template-list" ng-if="!(templates &amp;&amp; ( templates.length ) == 0)"></span>
 		</a>
 
 		<ul id="template-list" class="f-dropdown">
-			<li ng-repeat="(taskid, task) in templates = (tasks | taskhastag:'template')">
-				<a ng-href="#/tasks/new/{{ ::taskid }}">{{ ::task.name }}</a>
+			<li ng-repeat="task in templates = (tasks | taskhastag:'template')">
+				<a ng-href="#/tasks/new/{{ ::task.id }}">{{ ::task.name }}</a>
 			</li>
 		</ul>
 	</div>
@@ -34,6 +34,12 @@
 
 <div class="row">
 	<div class="columns large-12">
+		<h4>Filter matched {{ filtered.length }} tasks</h4>
+		<h5>Page {{ currentpage + 1 }}</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="columns large-12">
 		<table class="fullwidth">
 			<thead>
 				<tr>
@@ -44,30 +50,39 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="(taskid, task) in tasks | taskfilter:filter | taskhastag:tagfilter">
+				<tr ng-repeat="task in filtered = (tasks | taskfilter:filter | taskhastag:tagfilter) | offset:currentpage*tasksperpage | limitTo: tasksperpage">
 					<td>
-						<h4 class="mon-taskname"><a ng-href="#/tasks/{{::taskid}}">{{::task.name}}</a></h4>
+						<h4 class="mon-taskname"><a ng-href="#/tasks/{{::task.id}}">{{::task.name}}</a></h4>
 						<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
 						<p class="mon-taskdescription">{{::task.description}}</p>
 					</td>
 					<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
 					<td ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">
-						<div ng-show="executionsummary[taskid]">
-							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ executionsummary[taskid].start_time | formatDateTime }} -> {{ executionsummary[taskid].end_time | formatDateTime }} (Duration {{ executionsummary[taskid].duration | formatDuration }})">{{ executionsummary[taskid].start_time | fromNow }}</span>
-							({{ executionsummary[taskid].status }})
+						<div ng-show="executionsummary[task.id]">
+							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ executionsummary[task.id].start_time | formatDateTime }} -> {{ executionsummary[task.id].end_time | formatDateTime }} (Duration {{ executionsummary[task.id].duration | formatDuration }})">{{ executionsummary[task.id].start_time | fromNow }}</span>
+							({{ executionsummary[task.id].status }})
 						</div>
-						<div ng-hide="executionsummary[taskid]">
+						<div ng-hide="executionsummary[task.id]">
 							Not executed yet
 						</div>
 					</td>
 					<td ng-hide="tagfilter == 'template'">
 						<div class="switch round small">
-							<input id="enabled-{{ ::taskid }}" type="checkbox" ng-model="task.enabled" ng-click="enableTask(taskid)">
-							<label for="enabled-{{ ::taskid }}"></label>
+							<input id="enabled-{{ ::task.id }}" type="checkbox" ng-model="task.enabled" ng-click="enableTask(task)">
+							<label for="enabled-{{ ::task.id }}"></label>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-	</div>
+	</div>	
+</div>
+<div class="row">
+	<div class="columns large-12">
+		<div class="pagination-centered">
+			<ul class="pagination">
+				<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
+			</ul>
+		</div>
+	</div>	
 </div>

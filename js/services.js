@@ -14,8 +14,14 @@ monetaServices.factory('config', ['$location', function($location) {
 	}
 
 	backend = getQueryVariable('backend')
+	
 	if (!backend) {
-		backend = "http://127.0.0.1:32000"
+		if (window.moneta_backend) {
+			backend = window.moneta_backend;
+		}
+		else {
+			backend = "http://127.0.0.1:32000";
+		}
 	}
 
 	return {

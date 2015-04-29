@@ -81,7 +81,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams',
 
 monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', 'config', function ($scope, $http, $routeParams, $location, $modal, config) {
 
-	modalOkDialog = function(title, message, callback = null) {
+	modalOkDialog = function(title, message, callback) {
 		var modalInstance = $modal.open({
 			templateUrl: 'templates/modal-ok.html',
 			controller: 'ModalDialogCtrl',

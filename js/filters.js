@@ -10,6 +10,17 @@ monetaFilters.filter('taskfilter', function ($filter) {
 
 		var result = [];
 
+		function match_pool(task, pool)
+		{
+			for (var t = 0; t < task.pools.length; t++)
+			{
+				if (task.pools[t].toLowerCase().indexOf(pool) > -1)
+					return true;
+			}
+
+			return false;
+		}
+
 		function match_tag(task, tag)
 		{
 			for (var t = 0; t < task.tags.length; t++)
@@ -50,10 +61,26 @@ monetaFilters.filter('taskfilter', function ($filter) {
 					if (xor(negate, !match_tag(task, item)))
 						return;
 				}
+				else if (item.lastIndexOf('pool:', 0) === 0)
+				{
+					item = item.substr(5);
+
+					if (xor(negate, !match_pool(task, item)))
+						return;
+				}
 				else if (item.lastIndexOf('title:', 0) === 0)
 				{
 					item = item.substr(6);
 					if (xor(negate, !match_title(task, item)))
+						return;
+				}
+				else if (item.lastIndexOf('enabled:', 0) === 0)
+				{
+					item = item.substr(8);
+					if (item == 'false' || item == 'no')
+						negate = !negate;
+
+					if (xor(negate, !task.enabled))
 						return;
 				}
 				else 

@@ -33,7 +33,7 @@ formValidation.directive('validateSchedule', function() {
 					return true;
 				}
 
-				if (/^(\*(\/[0-9]+)?|[0-9]+(,[0-9]+)*)$/.test(viewValue)) {
+				if (/^(\d+(-\d+)?|\*(\/\d+)?)(,(\d+(-\d+)?|\*(\/\d+)?))*$/.test(viewValue)) {
 					// it is valid
 					return true;
 				}

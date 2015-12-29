@@ -34,8 +34,8 @@ monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 
 	});
 }]);
 
-monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$routeParams', 'config', function ($scope, $http, $routeParams, config) {
-	$http.get(config.backend + '/node/' + $routeParams.node + '/status').success(function(data, status, headers, config) {
+monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$stateParams', 'config', function ($scope, $http, $stateParams, config) {
+	$http.get(config.backend + '/node/' + $stateParams.node + '/status').success(function(data, status, headers, config) {
 		$scope.node = data;
 	});
 
@@ -44,7 +44,7 @@ monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$routeParams
 	});
 }]);
 
-monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams', '$location', '$window', 'config', function ($scope, $http, $routeParams, $location, $window, config) {
+monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$location', '$window', 'config', function ($scope, $http, $stateParams, $location, $window, config) {
 	$scope.tagfilter = '!template'
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
@@ -80,7 +80,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams',
 			});
 	};
 
-	$scope.filter = $routeParams.filter;
+	$scope.filter = $stateParams.filter;
 	$scope.$watch('filter', function(newVal, oldVal) {
 		if (newVal != oldVal) {
 			$location.search('filter', newVal);
@@ -88,7 +88,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams',
 		}
 	});
 
-	$scope.currentpage = ($routeParams.page > 0) ? $routeParams.page - 1 : 0;
+	$scope.currentpage = ($stateParams.page > 0) ? $stateParams.page - 1 : 0;
 	$scope.$watch('currentpage', function(newVal, oldVal) {
 		if (newVal != oldVal) {
 			$location.search('page', newVal + 1);
@@ -109,7 +109,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$routeParams',
 	});
 }]);
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', 'config', function ($scope, $http, $routeParams, $location, $modal, config) {
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$location', '$modal', 'config', function ($scope, $http, $stateParams, $location, $modal, config) {
 
 	modalOkDialog = function(title, message, callback) {
 		var modalInstance = $modal.open({
@@ -213,11 +213,11 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams',
 			});
 	};
 
-	$scope.taskId = $routeParams.taskId
+	$scope.taskId = $stateParams.taskId
 
 	if ($scope.taskId == 'new') {
-		if ($routeParams.templateId) {
-			$http.get(config.backend + '/tasks/' + $routeParams.templateId).success(function(data, status, headers, config) {
+		if ($stateParams.templateId) {
+			$http.get(config.backend + '/tasks/' + $stateParams.templateId).success(function(data, status, headers, config) {
 				$scope.task = data;
 				$scope.task.name = ""
 				$scope.task.description = ""
@@ -237,7 +237,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams',
 			}
 		}
 	} else {
-		$http.get(config.backend + '/tasks/' + $routeParams.taskId).success(function(data, status, headers, config) {
+		$http.get(config.backend + '/tasks/' + $stateParams.taskId).success(function(data, status, headers, config) {
 			$scope.task = data;
 		}).error(function(data, status, headers, config) {
 			modalOkDialog('An error occured while fetching the task !', 'Please try again.');
@@ -253,6 +253,3 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$routeParams',
 	});
 
 }]);
-
-
-

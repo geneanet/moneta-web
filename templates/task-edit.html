@@ -10,15 +10,6 @@
 <ng-form name="taskForm">
 	<div class="row">
 		<div class="large-12 columns">
-			<div class="switch round right">
-				<input id="enabled" type="checkbox" ng-model="task.enabled">
-				<label for="enabled"></label>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="large-12 columns">
 			<h3>Description</h3>
 		</div>
 	</div>
@@ -83,6 +74,11 @@
 				</div>
 			</div>
 
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns">
+				<label for="enabled"><input id="enabled" type="checkbox" ng-model="task.enabled"> Execution enabled</label>
 		</div>
 	</div>
 

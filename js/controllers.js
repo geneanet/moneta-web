@@ -109,26 +109,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 	});
 }]);
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$location', '$modal', 'config', function ($scope, $http, $stateParams, $location, $modal, config) {
-
-	modalOkDialog = function(title, message, callback) {
-		var modalInstance = $modal.open({
-			templateUrl: 'templates/modal-ok.html',
-			controller: 'ModalDialogCtrl',
-			backdrop: 'static',
-			resolve: {
-				title: function () { return title; },
-				message: function () { return message; }
-			}
-		});
-
-		modalInstance.result.then(function (result) {
-			if (callback)
-				callback()
-		});
-	};
-
-
+monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {
 	$scope.removeEnv = function(env) {
 		delete $scope.task.env[env];
 	};
@@ -186,22 +167,61 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		$scope.task.mailto.push(email);
 	};
 
+	$http.get(config.backend + '/tags').success(function(data, status, headers, config) {
+		$scope.tags = data;
+	});
+
+	$http.get(config.backend + '/cluster/pools').success(function(data, status, headers, config) {
+		$scope.pools = Object.keys(data);
+	});
+}]);
+
+
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$location', '$modal', 'config', function ($scope, $http, $stateParams, $state, $location, $modal, config) {
+	modalOkDialog = function(title, message, callback) {
+		var modalInstance = $modal.open({
+			templateUrl: 'templates/modal-ok.html',
+			controller: 'ModalDialogCtrl',
+			backdrop: 'static',
+			resolve: {
+				title: function () { return title; },
+				message: function () { return message; }
+			}
+		});
+
+		modalInstance.result.then(function (result) {
+			if (callback)
+				callback()
+		});
+	};
+
+
+	$scope.tabs = [
+		{ heading: "Edit", route:"task.edit", active:true },
+        { heading: "Audit Log", route:"task.auditlog", active:false },
+	];
+
+   $scope.go = function(route){
+       $state.go(route);
+   };
+
+   $scope.active = function(route){
+       return $state.is(route);
+   };
+
+   $scope.$on("$stateChangeSuccess", function() {
+       $scope.tabs.forEach(function(tab) {
+           tab.active = $scope.active(tab.route);
+       });
+   });
+
 	$scope.saveTask = function() {
-		if ($scope.taskId == 'new') {
-			$http.post(config.backend + '/tasks', $scope.task)
-				.success(function(data, status, headers, config) {
-					modalOkDialog('The task has been created.', '', function () { $location.path('/tasks'); });
-				}).error(function(data, status, headers, config) {
-					modalOkDialog('An error occured !', 'Please try again.');
-				});
-		} else {
-			$http.put(config.backend + '/tasks/' + $scope.taskId, $scope.task)
-				.success(function(data, status, headers, config) {
-					modalOkDialog('The task has been saved.', '', function () { $location.path('/tasks'); });
-				}).error(function(data, status, headers, config) {
-					modalOkDialog('An error occured !', 'Please try again.');
-				});
-		}
+		$http.put(config.backend + '/tasks/' + $scope.taskId, $scope.task)
+			.success(function(data, status, headers, config) {
+				modalOkDialog('The task has been saved.', '', function () { $location.path('/tasks'); });
+			}).error(function(data, status, headers, config) {
+				modalOkDialog('An error occured !', 'Please try again.');
+			});
 	};
 
 	$scope.deleteTask = function() {
@@ -215,41 +235,61 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 
 	$scope.taskId = $stateParams.taskId
 
-	if ($scope.taskId == 'new') {
-		if ($stateParams.templateId) {
-			$http.get(config.backend + '/tasks/' + $stateParams.templateId).success(function(data, status, headers, config) {
-				$scope.task = data;
-				$scope.task.name = ""
-				$scope.task.description = ""
-				$scope.removeTag('template')
-			}).error(function(data, status, headers, config) {
-				modalOkDialog('An error occured while fetching the template !', 'Please try again.');
-			});
-		} else {
-			$scope.task = {
-				'tags': [],
-				'env': {},
-				'schedules': [],
-				'mailto': [],
-				'mode': 'any',
-				'pools': [ 'default' ],
-				'mailreport': 'never'
+	$http.get(config.backend + '/tasks/' + $stateParams.taskId).success(function(data, status, headers, config) {
+		$scope.task = data;
+	}).error(function(data, status, headers, config) {
+		modalOkDialog('An error occured while fetching the task !', 'Please try again.');
+	});
+}]);
+
+
+monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stateParams', '$location', '$modal', 'config', function ($scope, $http, $state, $stateParams, $location, $modal, config) {
+	modalOkDialog = function(title, message, callback) {
+		var modalInstance = $modal.open({
+			templateUrl: 'templates/modal-ok.html',
+			controller: 'ModalDialogCtrl',
+			backdrop: 'static',
+			resolve: {
+				title: function () { return title; },
+				message: function () { return message; }
 			}
-		}
-	} else {
-		$http.get(config.backend + '/tasks/' + $stateParams.taskId).success(function(data, status, headers, config) {
-			$scope.task = data;
-		}).error(function(data, status, headers, config) {
-			modalOkDialog('An error occured while fetching the task !', 'Please try again.');
 		});
+
+		modalInstance.result.then(function (result) {
+			if (callback)
+				callback()
+		});
+	};
+
+	$scope.createTask = function() {
+		$http.post(config.backend + '/tasks', $scope.task)
+			.success(function(data, status, headers, config) {
+				modalOkDialog('The task has been created.', '', function () { $location.path('/tasks'); });
+			}).error(function(data, status, headers, config) {
+				modalOkDialog('An error occured !', 'Please try again.');
+			});
+	};
+
+	if ($stateParams.templateId) {
+		$http.get(config.backend + '/tasks/' + $stateParams.templateId).success(function(data, status, headers, config) {
+			$scope.templateId = $stateParams.templateId;
+			$scope.templateName = data.name;
+			$scope.task = data;
+			$scope.task.name = ""
+			$scope.task.description = ""
+			$scope.task.tags.splice($scope.task.tags.indexOf('template'), 1);
+		}).error(function(data, status, headers, config) {
+			modalOkDialog('An error occured while fetching the template !', 'Please try again.');
+		});
+	} else {
+		$scope.task = {
+			'tags': [],
+			'env': {},
+			'schedules': [],
+			'mailto': [],
+			'mode': 'any',
+			'pools': [ 'default' ],
+			'mailreport': 'never'
+		}
 	}
-
-	$http.get(config.backend + '/tags').success(function(data, status, headers, config) {
-		$scope.tags = data;
-	});
-
-	$http.get(config.backend + '/cluster/pools').success(function(data, status, headers, config) {
-		$scope.pools = Object.keys(data);
-	});
-
 }]);

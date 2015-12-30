@@ -1,0 +1,19 @@
+<h1><img src="images/logo.svg" style="height: 1.5em" alt="Moneta"/> <small>Task</small></h1>
+
+<ul class="breadcrumbs">
+	<li><a dropdown-toggle="#mainmenu" aria-controls="drop1" aria-expanded="false">Moneta</a></li>
+	<li><a href="#/tasks">Tasks</a></li>
+	<li class="current"><a href="#/tasks/{{ taskId }}">{{ task.name }}</a></li>
+</ul>
+<ng-include src="'templates/mainmenu.html'"></ng-include>
+
+<div class="row">
+	<div class="columns large-12">
+		<h2>Task <strong>{{task.name}}</strong></h2>
+		<ul class="tabs">
+			  <li class="tab-title" ng-repeat="t in tabs" ng-class="{active: t.active}" ><a href="" ng-click="go(t.route)">{{t.heading}}</a></li>
+		</ul>
+		<hr>
+		<div ui-view></div>
+	</div>
+</div>

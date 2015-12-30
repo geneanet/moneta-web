@@ -1,0 +1,24 @@
+<h1><img src="images/logo.svg" style="height: 1.5em" alt="Moneta"/> <small>Task</small></h1>
+
+<ul class="breadcrumbs">
+	<li><a dropdown-toggle="#mainmenu" aria-controls="drop1" aria-expanded="false">Moneta</a></li>
+	<li><a href="#/tasks">Tasks</a></li>
+	<li class="current"><a href="#/tasks/new/{{templateId}}">New task <span ng-if="templateName">using template <strong>{{templateName}}</strong></span></a></li>
+</ul>
+<ng-include src="'templates/mainmenu.html'"></ng-include>
+
+<div class="row">
+	<div class="columns large-12">
+		<h2>New task <span ng-if="templateName">using template <strong>{{templateName}}</strong></span></h2>
+
+		<ng-form name="taskForm">
+			<ng-include src="'templates/task-editor.html'"></ng-include>
+
+			<div class="row">
+				<div class="large-12 columns text-right">
+					<button class="button success" ng-click="createTask()" ng-disabled="taskForm.$invalid">Create</button>
+				</div>
+			</div>
+		</ng-form>
+	</div>
+</div>

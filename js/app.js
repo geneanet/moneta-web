@@ -23,17 +23,31 @@ monetaApp.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('tasks', {
 			url: "/tasks",
-			templateUrl: "templates/task-list.html",
+			templateUrl: "templates/tasks.html",
 			controller: 'TaskListCtrl'
 		})
-		.state('task', {
-			url: "/tasks/{taskId:[^/]+}",
-			templateUrl: "templates/task-edit.html",
-			controller: 'TaskEditCtrl'
+		.state('newtask', {
+		 	url: "/tasks/new",
+		 	templateUrl: "templates/newtask.html",
+		 	controller: 'NewTaskCtrl'
 		})
-		.state('taskfromtemplate', {
-			url: "/tasks/{taskId:[^/]+}/{templateId:[^/]+}",
+		.state('newtaskfromtemplate', {
+			url: "/tasks/new/{templateId}",
+			templateUrl: "templates/newtask.html",
+		 	controller: 'NewTaskCtrl'
+		})
+		.state('task', {
+			url: "/tasks/{taskId}",
+			templateUrl: "templates/task.html",
+			controller: 'TaskEditCtrl',
+			abstract: true
+		})
+		.state('task.edit', {
+			url: "/edit",
 			templateUrl: "templates/task-edit.html",
-			controller: 'TaskEditCtrl'
-		});
+		})
+		.state('task.auditlog', {
+			url: "/auditlog",
+			templateUrl: "templates/task-auditlog.html",
+		})
 });

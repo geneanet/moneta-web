@@ -31,11 +31,18 @@
 		<input type="radio" ng-model="tagfilter" name="tagfilter" value="template" id="showTemplates"><label for="showTemplates">Templates</label>
 	</div>
 </div>
-
 <div class="row">
 	<div class="columns large-12">
 		<h4>{{ filtered.length }} matching tasks</h4>
-		<h5>Page {{ currentpage + 1 }}</h5>
+	</div>
+</div>
+<div class="row" ng-if="(filtered | paginate:tasksperpage).length > 1">
+	<div class="columns large-12">
+		<div class="pagination-centered">
+			<ul class="pagination">
+				<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
+			</ul>
+		</div>
 	</div>
 </div>
 <div class="row">

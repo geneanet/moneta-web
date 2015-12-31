@@ -316,7 +316,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 		from = moment($scope.from).startOf('day').toISOString();
 		until = moment($scope.until).endOf('day').toISOString();
 
-		$http.get(config.backend + '/tasks/' + $scope.taskId + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + $scope.currentpage).success(function(data, status, headers, config) {
+		$http.get(config.backend + '/tasks/' + $scope.taskId + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + ($scope.currentpage * $scope.eventsperpage)).success(function(data, status, headers, config) {
 			data.records.forEach(function(event) {
 				event['show'] = false;
 

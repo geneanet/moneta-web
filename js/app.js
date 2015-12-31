@@ -4,7 +4,8 @@ var monetaApp = angular.module('monetaApp', [
 	'monetaFilters',
 	'monetaServices',
 	'formValidation',
-	'mm.foundation'
+	'mm.foundation',
+	'bzm-date-picker'
 ]);
 
 monetaApp.config(function($stateProvider, $urlRouterProvider) {
@@ -49,5 +50,6 @@ monetaApp.config(function($stateProvider, $urlRouterProvider) {
 		.state('task.auditlog', {
 			url: "/auditlog",
 			templateUrl: "templates/task-auditlog.html",
+			controller: 'AuditLogCtrl'
 		})
 });

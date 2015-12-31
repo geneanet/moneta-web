@@ -1,1 +1,23 @@
-Soon
+<div class="row">
+    <div class="columns large-6">
+        <label>From <date-picker ng-model="from" callback="fetchLog" not-after="until" autohide="true" format="yyyy-MM-dd"></date-picker></label>
+    </div>
+    <div class="columns large-6">
+        <label>Until <date-picker ng-model="until" callback="fetchLog" not-before="from" autohide="true" format="yyyy-MM-dd"></date-picker></label>
+    </div>
+</div>
+
+<table class="fullwidth">
+  <thead>
+    <tr>
+        <th width="250">Date</th>
+        <th>Event</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr ng-repeat="event in auditlog">
+          <td>{{event['@timestamp'] | formatDateTime}}</td>
+          <td>{{event['@type']}}</td>
+      </tr>
+  </tbody>
+</table>

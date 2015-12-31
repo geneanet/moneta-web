@@ -195,7 +195,6 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		});
 	};
 
-
 	$scope.tabs = [
 		{ heading: "Edit", route:"task.edit", active:true },
         { heading: "Audit Log", route:"task.auditlog", active:false },
@@ -292,4 +291,39 @@ monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stat
 			'mailreport': 'never'
 		}
 	}
+}]);
+
+monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'config', function ($scope, $http, $modal, config) {
+	modalOkDialog = function(title, message, callback) {
+		var modalInstance = $modal.open({
+			templateUrl: 'templates/modal-ok.html',
+			controller: 'ModalDialogCtrl',
+			backdrop: 'static',
+			resolve: {
+				title: function () { return title; },
+				message: function () { return message; }
+			}
+		});
+
+		modalInstance.result.then(function (result) {
+			if (callback)
+				callback()
+		});
+	};
+
+	$scope.fetchLog = function() {
+		from = moment($scope.from).startOf('day').toISOString();
+		until = moment($scope.until).endOf('day').toISOString();
+
+		$http.get(config.backend + '/tasks/' + $scope.taskId + '/auditlog?from=' + from + '&until=' + until).success(function(data, status, headers, config) {
+			$scope.auditlog = data.records;
+		}).error(function(data, status, headers, config) {
+			modalOkDialog('An error occured while fetching the audit log !', 'Please try again.');
+		});
+	};
+
+	$scope.from = moment().subtract(1, 'days').toDate();
+	$scope.until = moment().toDate();
+
+	$scope.fetchLog()
 }]);

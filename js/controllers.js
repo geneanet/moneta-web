@@ -341,7 +341,14 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 		});
 	};
 
-	filterUpdated = function(newValue, oldValue) {
+	dateUpdated = function(newValue, oldValue) {
+		if (!(newValue === oldValue)) {
+			$scope.currentpage = 0;
+			fetchLog();
+		}
+	};
+
+	pageUpdated = function(newValue, oldValue) {
 		if (!(newValue === oldValue)) {
 			fetchLog();
 		}
@@ -352,9 +359,9 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 	$scope.from = moment().subtract(1, 'days').toDate();
 	$scope.until = moment().toDate();
 
-	$scope.$watch('currentpage', filterUpdated);
-	$scope.$watch('from', filterUpdated);
-	$scope.$watch('until', filterUpdated);
+	$scope.$watch('currentpage', pageUpdated);
+	$scope.$watch('from', dateUpdated);
+	$scope.$watch('until', dateUpdated);
 
 	fetchLog();
 }]);

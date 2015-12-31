@@ -21,3 +21,16 @@
 input.ng-invalid.ng-touched {
 	background-color: #FA787E;
 }
+
+table.mon-auditlog td {
+	vertical-align: top
+}
+
+.mon-auditlog-event {
+	margin-top: 1em
+}
+
+td.mon-field {
+	font-weight: bold;
+	white-space: nowrap;
+}

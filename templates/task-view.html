@@ -1,0 +1,118 @@
+<h3>Description</h3>
+<table class="fullwidth">
+    <tbody>
+        <tr>
+            <td class="mon-field" width="1">Name</td>
+            <td>{{task.name}}</td>
+        </tr>
+		<tr>
+            <td class="mon-field" width="1">Description</td>
+            <td>{{task.description}}</td>
+        </tr>
+		<tr>
+            <td class="mon-field" width="1">Tags</td>
+            <td><span ng-repeat="tag in task.tags"><span class="radius label">{{tag}}</span> </span></td>
+        </tr>
+	</tbody>
+</table>
+
+<h3>Execution mode</h3>
+<table class="fullwidth">
+    <tbody>
+        <tr>
+            <td class="mon-field" width="1">Mode</td>
+			<td ng-if="task.mode == 'any'">Any server in the pool(s)</td>
+			<td ng-if="task.mode == 'all'">Every server in the pool(s)</td>
+        </tr>
+		<tr>
+            <td class="mon-field" width="1">Pools</td>
+            <td><span ng-repeat="pool in task.pools"><span class="radius label">{{pool}}</span> </span></td>
+        </tr>
+		<tr>
+            <td class="mon-field" width="1">Enabled</td>
+            <td>{{task.enabled}}</td>
+        </tr>
+	</tbody>
+</table>
+
+<h3>Schedule</h3>
+<table class="fullwidth">
+	<thead>
+		<tr>
+			<th>Month</th>
+			<th>Week</th>
+			<th>Day of Month</th>
+			<th>Day of week</th>
+			<th>Hour</th>
+			<th>Minute</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="schedule in task.schedules">
+			<td>{{ schedule.month.join(',') }}</td>
+			<td>{{ schedule.week.join(',') }}</td>
+			<td>{{ schedule.dayofmonth.join(',') }}</td>
+			<td>{{ schedule.dayofweek.join(',') }}</td>
+			<td>{{ schedule.hour.join(',') }}</td>
+			<td>{{ schedule.minute.join(',') }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Command</h3>
+<table class="fullwidth">
+    <tbody>
+		<tr>
+            <td class="mon-field" width="1">Command</td>
+			<td colspan="3">{{task.command}}</td>
+        </tr>
+		<tr>
+            <td class="mon-field" width="1">Working directory</td>
+			<td colspan="3">{{task.workdir}}</td>
+        </tr>
+		<tr>
+			<td class="mon-field" width="1">User</td>
+            <td>{{task.user}}</td>
+			<td class="mon-field" width="1">Group</td>
+            <td>{{task.group}}</td>
+        </tr>
+	</tbody>
+</table>
+<h4>Environment</h4>
+<table class="fullwidth">
+	<thead>
+		<tr>
+			<th>Variable</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(var, value) in task.env">
+			<td>{{ var }}</td>
+			<td>{{ value }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Reporting</h3>
+<table class="fullwidth">
+    <tbody>
+		<tr>
+            <td class="mon-field" width="1">Report by mail</td>
+			<td ng-if="task.mailreport == 'error'">On error</td>
+			<td ng-if="task.mailreport == 'stderr'">On output on stderr</td>
+			<td ng-if="task.mailreport == 'stdout'">On output on stdout</td>
+			<td ng-if="task.mailreport == 'output'">On any output</td>
+			<td ng-if="task.mailreport == 'always'">Always</td>
+			<td ng-if="task.mailreport == 'never'">Never</td>
+        </tr>
+		<tr ng-hide="task.mailreport == 'never'">
+            <td class="mon-field" width="1">Recipients</td>
+			<td>
+				<ul class="no-bullet">
+					<li ng-repeat="recipient in task.mailto">{{ recipient }}</li>
+				</ul>
+			</td>
+        </tr>
+	</tbody>
+</table>

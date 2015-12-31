@@ -315,7 +315,21 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 		from = moment($scope.from).startOf('day').toISOString();
 		until = moment($scope.until).endOf('day').toISOString();
 
-		$http.get(config.backend + '/tasks/' + $scope.taskId + '/auditlog?from=' + from + '&until=' + until).success(function(data, status, headers, config) {
+		$http.get(config.backend + '/tasks/' + $scope.taskId + '/auditlog?from=' + from + '&until=' + until + '&limit=100').success(function(data, status, headers, config) {
+			data.records.forEach(function(event) {
+				event['show'] = false;
+
+				if ((event['@type'] == "moneta-task-report" && event['status'] != 'ok')
+				   || (event['@type'] == "moneta-task-execution" && !event['success'])) {
+					event['@status'] = "alert";
+				}
+				else if (event['@type'] == "moneta-task-report" && event['status'] == 'ok') {
+					event['@status'] = "success";
+				}
+				else {
+					event['@status'] = "info";
+				}
+			});
 			$scope.auditlog = data.records;
 		}).error(function(data, status, headers, config) {
 			modalOkDialog('An error occured while fetching the audit log !', 'Please try again.');

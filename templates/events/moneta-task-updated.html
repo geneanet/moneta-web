@@ -1,0 +1,7 @@
+<ul class="tabs">
+    <li class="tab-title" ng-class="{active: tab != 'old'}" ><a href="" ng-click="tab = 'new'">New</a></li>
+    <li class="tab-title" ng-class="{active: tab == 'old'}" ><a href="" ng-click="tab = 'old'">Old</a></li>
+</ul>
+<hr>
+<div class="mon-auditlog-event" ng-if="tab != 'old'" ng-init="task = event.config" ng-include="'templates/task-view.html'"></div>
+<div class="mon-auditlog-event" ng-if="tab == 'old'" ng-init="task = event.oldconfig" ng-include="'templates/task-view.html'"></div>

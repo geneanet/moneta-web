@@ -1,0 +1,14 @@
+<table class="fullwidth">
+    <tbody>
+        <tr>
+              <td class="mon-field" width="1">Success</td>
+            <td>{{event['success']}}</td>
+        </tr>
+        <tr ng-if="!event['success']">
+            <td class="mon-field" width="1">Message</td>
+            <td>
+                <pre style="overflow-y: scroll; max-height: 20em;">{{event['message']}}</pre>
+            </td>
+        </tr>
+    </tbody>
+</table>

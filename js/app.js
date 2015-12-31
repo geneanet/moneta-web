@@ -44,6 +44,10 @@ monetaApp.config(function($stateProvider, $urlRouterProvider) {
 			controller: 'TaskEditCtrl',
 			abstract: true
 		})
+		.state('task.view', {
+			url: "/view",
+			templateUrl: "templates/task-view.html",
+		})
 		.state('task.edit', {
 			url: "/edit",
 			templateUrl: "templates/task-edit.html",

@@ -52,7 +52,7 @@
 			<tbody>
 				<tr ng-repeat="task in filtered = (tasks | taskfilter:filter | taskhastag:tagfilter) | offset:currentpage*tasksperpage | limitTo: tasksperpage">
 					<td>
-						<h4 class="mon-taskname"><a ng-href="#/tasks/{{::task.id}}/edit">{{::task.name}}</a></h4>
+						<h4 class="mon-taskname"><a ng-href="#/tasks/{{::task.id}}/view">{{::task.name}}</a></h4>
 						<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
 						<p class="mon-taskdescription">{{::task.description}}</p>
 					</td>

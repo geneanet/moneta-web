@@ -196,7 +196,8 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 	};
 
 	$scope.tabs = [
-		{ heading: "Edit", route:"task.edit", active:true },
+		{ heading: "View", route:"task.view", active:true },
+		{ heading: "Edit", route:"task.edit", active:false },
         { heading: "Audit Log", route:"task.auditlog", active:false },
 	];
 

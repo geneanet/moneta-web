@@ -8,9 +8,9 @@
 </div>
 
 <div class="row">
-    <div class="columns large-12">
-        Events : {{ count }}
-    </div>
+	<div class="columns large-12">
+		<h4>{{ count }} events</h4>
+	</div>
 </div>
 
 <div class="row">
@@ -23,32 +23,36 @@
 	</div>
 </div>
 
-<table class="fullwidth mon-auditlog">
-  <thead>
-    <tr>
-        <th width="250">Date</th>
-        <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr ng-repeat="event in auditlog">
-            <td>{{event['@timestamp'] | formatDateTime}}</td>
-            <td>
-                <a href="" style="display: block"  ng-click="event.show = !event.show">
-                    <span ng-switch="event['@type']">
-                        <span ng-switch-when="moneta-task-created">Creation</span>
-                        <span ng-switch-when="moneta-task-updated">Update</span>
-                        <span ng-switch-when="moneta-task-deleted">Deletion</span>
-                        <span ng-switch-when="moneta-task-execution">Execution</span>
-                        <span ng-switch-when="moneta-task-report">Execution Report</span>
-                    </span>
-                    <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
-                </a>
-                <div class="mon-auditlog-event" ng-show="event.show" ng-include="'templates/events/' + event['@type'] + '.html'"></div>
-            </td>
-      </tr>
-  </tbody>
-</table>
+<div class="row">
+	<div class="columns large-12">
+        <table class="fullwidth mon-auditlog">
+          <thead>
+            <tr>
+                <th width="250">Date</th>
+                <th>Event</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="event in auditlog">
+                    <td>{{event['@timestamp'] | formatDateTime}}</td>
+                    <td>
+                        <a href="" style="display: block"  ng-click="event.show = !event.show">
+                            <span ng-switch="event['@type']">
+                                <span ng-switch-when="moneta-task-created">Creation</span>
+                                <span ng-switch-when="moneta-task-updated">Update</span>
+                                <span ng-switch-when="moneta-task-deleted">Deletion</span>
+                                <span ng-switch-when="moneta-task-execution">Execution</span>
+                                <span ng-switch-when="moneta-task-report">Execution Report</span>
+                            </span>
+                            <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
+                        </a>
+                        <div class="mon-auditlog-event" ng-show="event.show" ng-include="'templates/events/' + event['@type'] + '.html'"></div>
+                    </td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="row">
 	<div class="columns large-12">

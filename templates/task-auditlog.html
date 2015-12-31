@@ -35,7 +35,14 @@
             <td>{{event['@timestamp'] | formatDateTime}}</td>
             <td>
                 <a href="" style="display: block"  ng-click="event.show = !event.show">
-                    {{event['@type']}} <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
+                    <span ng-switch="event['@type']">
+                        <span ng-switch-when="moneta-task-created">Creation</span>
+                        <span ng-switch-when="moneta-task-updated">Update</span>
+                        <span ng-switch-when="moneta-task-deleted">Deletion</span>
+                        <span ng-switch-when="moneta-task-execution">Execution</span>
+                        <span ng-switch-when="moneta-task-report">Execution Report</span>
+                    </span>
+                    <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
                 </a>
                 <div class="mon-auditlog-event" ng-show="event.show" ng-include="'templates/events/' + event['@type'] + '.html'"></div>
             </td>

@@ -13,11 +13,11 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row" ng-if="pages.length > 1">
 	<div class="columns large-12">
 		<div class="pagination-centered">
 			<ul class="pagination">
-				<li ng-class="{current: page == currentpage}" ng-repeat="page in pages"><button ng-click="$parent.currentpage = page">{{page + 1}}</button></li>
+				<li ng-class="{current: page == currentpage}" ng-repeat="page in pages"><button ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
 			</ul>
 		</div>
 	</div>
@@ -54,11 +54,11 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" ng-if="pages.length > 1">
 	<div class="columns large-12">
 		<div class="pagination-centered">
 			<ul class="pagination">
-				<li ng-class="{current: page == currentpage}" ng-repeat="page in pages"><button ng-click="$parent.currentpage = page">{{page + 1}}</button></li>
+				<li ng-class="{current: page == currentpage}" ng-repeat="page in pages"><button ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
 			</ul>
 		</div>
 	</div>

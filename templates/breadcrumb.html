@@ -1,0 +1,16 @@
+<div>
+	<div ng-controller="MainMenuCtrl">
+		<ul class="breadcrumbs">
+			<li><a id="mainmenubtn" aria-controls="mainmenu" aria-expanded="false" ng-click="toggleMainMenu()">Moneta</a></li>
+		    <li ng-repeat="step in steps" ng-class="{current: $last}" ng-switch="$last || !!step.abstract">
+		      <a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a>
+		      <span ng-switch-when="true">{{step.ncyBreadcrumbLabel}}</span>
+		    </li>
+		</ul>
+		<ul id="mainmenu" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+			<li><a href="#/tasks" ng-click="toggleMainMenu()">Task list</a></li>
+			<li><a href="#/cluster" ng-click="toggleMainMenu()">Cluster status</a></li>
+			<li><a href="#/auditlog" ng-click="toggleMainMenu()">Audit Log</a></li>
+		</ul>
+	</div>
+</div>

@@ -16,7 +16,6 @@
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-animate/angular-animate.js"></script>
 	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-	<script src="bower_components/angular-foundation/mm-foundation-tpls.min.js"></script>
 
 	<script src="vendor/angular-foundation-datepicker/angular-foundation-datepicker-min.js"></script>
 	<link rel="stylesheet" href="vendor/angular-foundation-datepicker/angular-foundation-datepicker.css">
@@ -25,6 +24,7 @@
     <script type="text/javascript" src="bower_components/spin.js/spin.js"></script>
     <script type="text/javascript" src="bower_components/angular-spinner/angular-spinner.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-loading-spinner/angular-loading-spinner.js"></script>
+	<script type="text/javascript" src="bower_components/angular-breadcrumb/release/angular-breadcrumb.js"></script>
 
 	<script src="config.js"></script>
 
@@ -42,6 +42,9 @@
 			<a href="" class="close" ng-if="alert.closable" ng-click="alerts.splice($index, 1)">&times;</a>
 		</div>
 	</div>
+
+	<h1><img src="images/logo.svg" style="height: 1.5em" alt="Moneta"/> <small><span ncy-breadcrumb-last></span></small></h1>
+	<div ncy-breadcrumb></div>
 	<div ui-view></div>
 </body>
 </html>

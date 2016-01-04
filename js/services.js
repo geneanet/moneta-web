@@ -14,7 +14,7 @@ monetaServices.factory('config', ['$location', function($location) {
 	}
 
 	backend = getQueryVariable('backend')
-	
+
 	if (!backend) {
 		if (window.moneta_backend) {
 			backend = window.moneta_backend;
@@ -26,5 +26,41 @@ monetaServices.factory('config', ['$location', function($location) {
 
 	return {
 		'backend': backend
+	};
+}]);
+
+monetaServices.factory('alert', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+	function deleteAlert(alert) {
+		alerts = $rootScope.alerts;
+		alerts.splice(alerts.indexOf(alert), 1);
+	}
+
+	function addAlert(alert) {
+		if (alert['type'] === undefined) {
+			alert['type'] = 'info';
+		}
+
+		if (alert['closable'] === undefined) {
+			alert['closable'] = true;
+		}
+
+		if ($rootScope.alerts === undefined) {
+			$rootScope.alerts = [];
+		}
+
+		if (alert['timeout'] > 0) {
+			$timeout(function() {
+				deleteAlert(this);
+			}, alert['timeout']);
+		}
+
+		$rootScope.alerts.push(alert);
+
+		return alert;
+	}
+
+	return {
+		'add': addAlert,
+		'delete': deleteAlert
 	};
 }]);

@@ -6,7 +6,8 @@ var monetaApp = angular.module('monetaApp', [
 	'formValidation',
 	'mm.foundation',
 	'bzm-date-picker',
-	'ngLoadingSpinner'
+	'ngLoadingSpinner',
+	'ngAnimate'
 ]);
 
 monetaApp.config(function($stateProvider, $urlRouterProvider) {

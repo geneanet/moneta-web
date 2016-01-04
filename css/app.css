@@ -34,3 +34,31 @@ td.mon-field {
 	font-weight: bold;
 	white-space: nowrap;
 }
+
+#alerts {
+	position: fixed;
+	width: 98%;
+	z-index: 10000;
+	margin: 1%;
+	overflow: hidden;
+}
+
+#alerts .alert-box.ng-enter {
+	opacity:0;
+	left: -100%;
+}
+
+#alerts .alert-box.ng-enter-active {
+	transition:0.2s linear all;
+	opacity:1;
+	left: 0;
+}
+
+#alerts .alert-box.ng-leave {
+	animation:0.5s alert_closed;
+}
+
+@keyframes alert_closed {
+  from { opacity:1; left: 0%; }
+  to { opacity:0; left: 100% }
+}

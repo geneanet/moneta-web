@@ -1,15 +1,6 @@
 var monetaControllers = angular.module('monetaControllers', ['monetaServices']);
 
-monetaControllers.controller('ModalDialogCtrl', [ '$scope', '$modalInstance', 'message', 'title', function ($scope, $modalInstance, message, title) {
-	$scope.message = message;
-	$scope.title = title;
-
-	$scope.ok = function () {
-		$modalInstance.close();
-	};
-}]);
-
-monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {
+monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 'alert', function ($scope, $http, config, alert) {
 	$http.get(config.backend + '/cluster/status').success(function(data, status, headers, httpconfig) {
 		$scope.cluster = data;
 		$scope.processes = {}
@@ -25,26 +16,36 @@ monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 
 						'task': value['task']
 					}
 				});
+			}).error(function(data, status, headers, config) {
+				alert.add({'type': 'alert', 'message': 'An error occured while fetching node ' + key + ' status, please try again !'});
 			});
 		});
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching cluster status, please try again !'});
 	});
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
 		$scope.tasks = data;
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching tasks, please try again !'});
 	});
 }]);
 
 monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$stateParams', 'config', function ($scope, $http, $stateParams, config) {
 	$http.get(config.backend + '/node/' + $stateParams.node + '/status').success(function(data, status, headers, config) {
 		$scope.node = data;
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching cluster status, please try again !'});
 	});
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
 		$scope.tasks = data;
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching tasks, please try again !'});
 	});
 }]);
 
-monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$location', '$window', 'config', function ($scope, $http, $stateParams, $location, $window, config) {
+monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$location', '$window', 'config', 'alert', function ($scope, $http, $stateParams, $location, $window, config, alert) {
 	$scope.tagfilter = '!template'
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
@@ -57,6 +58,8 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 
 
 		$scope.tasks = arraydata;
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching the tasks, please try again !'});
 	});
 
 	$http.get(config.backend + '/plugins').success(function(data, status, headers) {
@@ -67,6 +70,8 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 				$scope.executionsummary = data;
 			});
 		}
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching the plugins list, please try again !'});
 	});
 
 	$scope.enableTask = function(task) {
@@ -177,24 +182,7 @@ monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', fun
 }]);
 
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$location', '$modal', 'config', function ($scope, $http, $stateParams, $state, $location, $modal, config) {
-	modalOkDialog = function(title, message, callback) {
-		var modalInstance = $modal.open({
-			templateUrl: 'templates/modal-ok.html',
-			controller: 'ModalDialogCtrl',
-			backdrop: 'static',
-			resolve: {
-				title: function () { return title; },
-				message: function () { return message; }
-			}
-		});
-
-		modalInstance.result.then(function (result) {
-			if (callback)
-				callback()
-		});
-	};
-
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$location', 'config', 'alert', function ($scope, $http, $stateParams, $state, $location, config, alert) {
 	$scope.tabs = [
 		{ heading: "View", route:"task.view", active:true },
 		{ heading: "Edit", route:"task.edit", active:false },
@@ -218,18 +206,20 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 	$scope.saveTask = function() {
 		$http.put(config.backend + '/tasks/' + $scope.taskId, $scope.task)
 			.success(function(data, status, headers, config) {
-				modalOkDialog('The task has been saved.', '', function () { $location.path('/tasks'); });
+				alert.add({'type': 'success', 'message': 'The task has been saved.', 'timeout': 3000});
+				$location.path('/tasks');
 			}).error(function(data, status, headers, config) {
-				modalOkDialog('An error occured !', 'Please try again.');
+				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
 	};
 
 	$scope.deleteTask = function() {
 		$http.delete(config.backend + '/tasks/' + $scope.taskId, $scope.task)
 			.success(function(data, status, headers, config) {
-				modalOkDialog('The task has been deleted.', '', function () { $location.path('/tasks'); });
+				alert.add({'type': 'success', 'message': 'The task has been deleted.', 'timeout': 3000});
+				$location.path('/tasks');
 			}).error(function(data, status, headers, config) {
-				modalOkDialog('An error occured !', 'Please try again.');
+				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
 	};
 
@@ -238,35 +228,19 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 	$http.get(config.backend + '/tasks/' + $stateParams.taskId).success(function(data, status, headers, config) {
 		$scope.task = data;
 	}).error(function(data, status, headers, config) {
-		modalOkDialog('An error occured while fetching the task !', 'Please try again.');
+		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 	});
 }]);
 
 
-monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stateParams', '$location', '$modal', 'config', function ($scope, $http, $state, $stateParams, $location, $modal, config) {
-	modalOkDialog = function(title, message, callback) {
-		var modalInstance = $modal.open({
-			templateUrl: 'templates/modal-ok.html',
-			controller: 'ModalDialogCtrl',
-			backdrop: 'static',
-			resolve: {
-				title: function () { return title; },
-				message: function () { return message; }
-			}
-		});
-
-		modalInstance.result.then(function (result) {
-			if (callback)
-				callback()
-		});
-	};
-
+monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stateParams', '$location', 'config', 'alert', function ($scope, $http, $state, $stateParams, $location, config, alert) {
 	$scope.createTask = function() {
 		$http.post(config.backend + '/tasks', $scope.task)
 			.success(function(data, status, headers, config) {
-				modalOkDialog('The task has been created.', '', function () { $location.path('/tasks'); });
+				alert.add({'type': 'success', 'message': 'The task has been created.', 'timeout': 3000});
+				$location.path('/tasks');
 			}).error(function(data, status, headers, config) {
-				modalOkDialog('An error occured !', 'Please try again.');
+				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
 	};
 
@@ -279,7 +253,7 @@ monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stat
 			$scope.task.description = ""
 			$scope.task.tags.splice($scope.task.tags.indexOf('template'), 1);
 		}).error(function(data, status, headers, config) {
-			modalOkDialog('An error occured while fetching the template !', 'Please try again.');
+			alert.add({'type': 'alert', 'message': 'An error occured while fetching the template, please try again !'});
 		});
 	} else {
 		$scope.task = {
@@ -294,24 +268,7 @@ monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stat
 	}
 }]);
 
-monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'config', function ($scope, $http, $modal, config) {
-	modalOkDialog = function(title, message, callback) {
-		var modalInstance = $modal.open({
-			templateUrl: 'templates/modal-ok.html',
-			controller: 'ModalDialogCtrl',
-			backdrop: 'static',
-			resolve: {
-				title: function () { return title; },
-				message: function () { return message; }
-			}
-		});
-
-		modalInstance.result.then(function (result) {
-			if (callback)
-				callback()
-		});
-	};
-
+monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'alert', function ($scope, $http, config, alert) {
 	fetchLog = function() {
 		from = moment($scope.from).startOf('day').toISOString();
 		until = moment($scope.until).endOf('day').toISOString();
@@ -343,7 +300,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 			$scope.count = data.count;
 			$scope.auditlog = data.records;
 		}).error(function(data, status, headers, config) {
-			modalOkDialog('An error occured while fetching the audit log !', 'Please try again.');
+			alert.add({'type': 'alert', 'message': 'An error occured while fetching the audit log, please try again !'});
 		});
 	};
 
@@ -363,6 +320,8 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 	if (!$scope.taskId) {
 		$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
 			$scope.tasks = data;
+		}).error(function(data, status, headers, config) {
+			alert.add({'type': 'alert', 'message': 'An error occured while fetching the tasks, please try again !'});
 		});
 	}
 

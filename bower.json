@@ -16,7 +16,6 @@
     "foundation": "5.5.1",
     "angular": "~1.4.0",
     "angular-animate": "~1.4.0",
-    "angular-foundation": "~0.5.1",
     "moment": "~2.9.0",
     "angular-ui-router": "~0.2.15",
     "angular-loading-spinner": ">=0.0.3"

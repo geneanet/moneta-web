@@ -368,6 +368,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 
 	$scope.eventsperpage = 50;
 	$scope.currentpage = 0;
+	$scope.today = moment().toDate();
 	$scope.from = moment().subtract(1, 'days').toDate();
 	$scope.until = moment().toDate();
 

@@ -84,14 +84,14 @@ monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvide
 			url: "/edit",
 			templateUrl: "templates/task-edit.html",
 			ncyBreadcrumb: {
-				label: 'Task {{task.name}} Edition'
+				label: 'Task {{task.name}} - Edition'
 			}
 		})
 		.state('task.auditlog', {
 			url: "/auditlog",
 			templateUrl: "templates/auditlog.html",
 			ncyBreadcrumb: {
-				label: 'Task {{task.name}} Audit Log'
+				label: 'Task {{task.name}} - Audit Log'
 			}
 		})
 		.state('auditlog', {

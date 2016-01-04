@@ -62,3 +62,32 @@ td.mon-field {
   from { opacity:1; left: 0%; }
   to { opacity:0; left: 100% }
 }
+
+.tabs {
+	top: 1px;
+	position: relative;
+}
+
+.tabs .tab-title.active a {
+	font-weight: bold
+}
+
+.tabs .tab-title {
+	border: solid silver;
+	border-width: 1px 0px 1px 1px;
+}
+
+.tabs .tab-title.active {
+	border-bottom-color: #ffffff;
+}
+
+.tabs .tab-title:last-of-type {
+	border-width: 1px;
+}
+
+.tabs-content {
+	padding: 1rem;
+	border: 1px solid silver;
+	background-color: #ffffff;
+	margin-top: 0px;
+}

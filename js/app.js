@@ -54,12 +54,10 @@ monetaApp.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('task.auditlog', {
 			url: "/auditlog",
-			templateUrl: "templates/auditlog.html",
-			controller: 'AuditLogCtrl'
+			templateUrl: "templates/auditlog.html"
 		})
 		.state('auditlog', {
 			url: "/auditlog",
-			templateUrl: "templates/global-auditlog.html",
-			controller: 'AuditLogCtrl'
+			templateUrl: "templates/global-auditlog.html"
 		})
 });

@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-              <tr ng-repeat="event in auditlog">
+              <tr ng-repeat-start="event in auditlog">
                     <td>{{event['@timestamp'] | formatDateTime}}</td>
                     <th ng-if="!taskId">{{event.task}}</th>
                     <td>
@@ -48,8 +48,12 @@
                             </span>
                             <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
                         </a>
-                        <div class="mon-auditlog-event" ng-show="event.show" ng-include="'templates/events/' + event['@type'] + '.html'"></div>
                     </td>
+              </tr>
+              <tr ng-if="event.show" ng-repeat-end>
+                  <td colspan="3">
+                      <div ng-include="'templates/events/' + event['@type'] + '.html'"></div>
+                  </td>
               </tr>
           </tbody>
         </table>

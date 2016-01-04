@@ -38,7 +38,7 @@
               <tbody>
                   <tr ng-repeat-start="event in auditlog">
                         <td>{{event['@timestamp'] | formatDateTime}}</td>
-                        <td ng-if="!taskId"><a href="#/tasks/{{event.task}}">{{tasks[event.task].name}}</a></td>
+                        <td ng-if="!taskId"><a href="#/tasks/{{event.task}}/view">{{tasks[event.task].name}}</a></td>
                         <td style="white-space: nowrap">
                             <a href="" style="display: block"  ng-click="event.show = !event.show">
                                 <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>

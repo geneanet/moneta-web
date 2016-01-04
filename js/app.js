@@ -16,7 +16,6 @@ monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvide
     });
 
 	$urlRouterProvider
-		.when('/tasks/:id', '/tasks/:id/view')
 		.otherwise("/tasks");
 
 	$stateProvider

@@ -18,7 +18,8 @@
     	<div class="columns large-12">
     		<div class="pagination-centered">
     			<ul class="pagination">
-    				<li ng-class="{current: page == currentpage}" ng-repeat="page in pages"><button ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
+    				<li ng-repeat-start="page in pages" ng-show="(page > (currentpage - 5)) && (page < (currentpage + 5)) || page == 0 || page == pages.length - 1" ng-class="{current: page == currentpage}"><a href="" ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
+                    <li ng-repeat-end ng-if="(page == 0 && currentpage > 5) || (page == pages.length - 2 && currentpage < pages.length - 6)" class="unavailable"><a href="">&hellip;</a></li>
     			</ul>
     		</div>
     	</div>
@@ -65,7 +66,8 @@
     	<div class="columns large-12">
     		<div class="pagination-centered">
     			<ul class="pagination">
-    				<li ng-class="{current: page == currentpage}" ng-repeat="page in pages"><button ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
+    				<li ng-repeat-start="page in pages" ng-show="(page > (currentpage - 5)) && (page < (currentpage + 5)) || page == 0 || page == pages.length - 1" ng-class="{current: page == currentpage}"><a href="" ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
+                    <li ng-repeat-end ng-if="(page == 0 && currentpage > 5) || (page == pages.length - 2 && currentpage < pages.length - 6)" class="unavailable"><a href="">&hellip;</a></li>
     			</ul>
     		</div>
     	</div>

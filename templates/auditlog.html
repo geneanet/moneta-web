@@ -39,8 +39,9 @@
                   <tr ng-repeat-start="event in auditlog">
                         <td>{{event['@timestamp'] | formatDateTime}}</td>
                         <td ng-if="!taskId"><a href="#/tasks/{{event.task}}">{{tasks[event.task].name}}</a></td>
-                        <td>
+                        <td style="white-space: nowrap">
                             <a href="" style="display: block"  ng-click="event.show = !event.show">
+                                <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
                                 <span ng-switch="event['@type']">
                                     <span ng-switch-when="moneta-task-created">Creation</span>
                                     <span ng-switch-when="moneta-task-updated">Update</span>
@@ -48,7 +49,6 @@
                                     <span ng-switch-when="moneta-task-execution">Execution</span>
                                     <span ng-switch-when="moneta-task-report">Execution Report</span>
                                 </span>
-                                <span ng-show="event['@status']" class="right label {{event['@status']}}">{{event['@status']}}</span>
                             </a>
                         </td>
                   </tr>

@@ -10,7 +10,9 @@ var monetaApp = angular.module('monetaApp', [
 ]);
 
 monetaApp.config(function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise("/tasks");
+	$urlRouterProvider
+		.when('/tasks/:id', '/tasks/:id/view')
+		.otherwise("/tasks");
 
 	$stateProvider
 		.state('cluster', {

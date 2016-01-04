@@ -360,6 +360,12 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', '$modal', 'conf
 		}
 	};
 
+	if (!$scope.taskId) {
+		$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
+			$scope.tasks = data;
+		});
+	}
+
 	$scope.eventsperpage = 50;
 	$scope.currentpage = 0;
 	$scope.from = moment().subtract(1, 'days').toDate();

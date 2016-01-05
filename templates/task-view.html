@@ -20,6 +20,10 @@
 <table class="fullwidth">
     <tbody>
         <tr>
+            <td class="mon-field" width="1">Enabled</td>
+            <td>{{task.enabled}}</td>
+        </tr>
+        <tr>
             <td class="mon-field" width="1">Mode</td>
 			<td ng-if="task.mode == 'any'">Any server in the pool(s)</td>
 			<td ng-if="task.mode == 'all'">Every server in the pool(s)</td>
@@ -27,10 +31,6 @@
 		<tr>
             <td class="mon-field" width="1">Pools</td>
             <td><span ng-repeat="pool in task.pools"><span class="radius label">{{pool}}</span> </span></td>
-        </tr>
-		<tr>
-            <td class="mon-field" width="1">Enabled</td>
-            <td>{{task.enabled}}</td>
         </tr>
 	</tbody>
 </table>

@@ -42,6 +42,11 @@
 	</div>
 
 	<div class="row">
+		<div class="large-12 columns">
+				<label for="enabled"><input id="enabled" type="checkbox" ng-model="task.enabled"> Execution enabled</label>
+		</div>
+	</div>
+	<div class="row">
 		<div class="large-6 columns">
 			<select ng-model="task.mode">
 				<option value="any" default>Any server in the pool(s)</option>
@@ -65,11 +70,6 @@
 				</div>
 			</div>
 
-		</div>
-	</div>
-	<div class="row">
-		<div class="large-12 columns">
-				<label for="enabled"><input id="enabled" type="checkbox" ng-model="task.enabled"> Execution enabled</label>
 		</div>
 	</div>
 

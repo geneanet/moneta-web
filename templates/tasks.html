@@ -18,70 +18,59 @@
 </div>
 
 <div class="row">
-	<div class="large-10 columns">
-		<input type="radio" ng-model="tagfilter" name="tagfilter" value="!template" id="showTasks"><label for="showTasks">Tasks</label>
-		<input type="radio" ng-model="tagfilter" name="tagfilter" value="template" id="showTemplates"><label for="showTemplates">Templates</label>
-	</div>
-</div>
-<div class="row">
-	<div class="columns large-12">
-		<h4>{{ filtered.length }} matching tasks</h4>
-	</div>
-</div>
-<div class="row" ng-if="(filtered | paginate:tasksperpage).length > 1">
-	<div class="columns large-12">
-		<div class="pagination-centered">
-			<ul class="pagination">
-				<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
-			</ul>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="columns large-12">
-		<table class="fullwidth">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Pools</th>
-					<th ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">Last execution</th>
-					<th ng-hide="tagfilter == 'template'">Enabled</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="task in filtered = (tasks | taskfilter:filter | taskhastag:tagfilter) | offset:currentpage*tasksperpage | limitTo: tasksperpage">
-					<td>
-						<h4 class="mon-taskname"><a ng-href="#/tasks/{{::task.id}}/view">{{::task.name}}</a></h4>
-						<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
-						<p class="mon-taskdescription">{{::task.description}}</p>
-					</td>
-					<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
-					<td ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">
-						<div ng-show="executionsummary[task.id]">
-							<span -tooltip aria-haspopup="true" class="has-tip" title="{{ executionsummary[task.id].start_time | formatDateTime }} -> {{ executionsummary[task.id].end_time | formatDateTime }} (Duration {{ executionsummary[task.id].duration | formatDuration }})">{{ executionsummary[task.id].start_time | fromNow }}</span>
-							({{ executionsummary[task.id].status }})
-						</div>
-						<div ng-hide="executionsummary[task.id]">
-							Not executed yet
-						</div>
-					</td>
-					<td ng-hide="tagfilter == 'template'">
-						<div class="switch round small">
-							<input id="enabled-{{ ::task.id }}" type="checkbox" ng-model="task.enabled" ng-click="enableTask(task)">
-							<label for="enabled-{{ ::task.id }}"></label>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-<div class="row" ng-if="(filtered | paginate:tasksperpage).length > 1">
-	<div class="columns large-12">
-		<div class="pagination-centered">
-			<ul class="pagination">
-				<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
-			</ul>
+	<div class="large-12 columns">
+		<ul class="tabs">
+	        <li class="tab-title" ng-class="{active: tagfilter == '!template'}" ><a href="" ng-click="tagfilter = '!template'">Tasks ({{(filtered | taskhastag:'!template').length}})</a></li>
+	        <li class="tab-title" ng-class="{active: tagfilter == 'template'}" ><a href="" ng-click="tagfilter = 'template'">Templates ({{(filtered | taskhastag:'template').length}})</a></li>
+	    </ul>
+		<div class="tabs-content">
+			<div class="pagination-centered" ng-if="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length > 1">
+				<ul class="pagination">
+					<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | taskhastag:tagfilter | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
+				</ul>
+			</div>
+
+			<table class="fullwidth">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Pools</th>
+						<th ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">Last execution</th>
+						<th ng-hide="tagfilter == 'template'">Enabled</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="task in filtered = (tasks | taskfilter:filter) | taskhastag:tagfilter | offset:currentpage*tasksperpage | limitTo: tasksperpage">
+						<td>
+							<h4 class="mon-taskname"><a ng-href="#/tasks/{{::task.id}}/view">{{::task.name}}</a></h4>
+							<p class="mon-taglist"><span ng-repeat="tag in task.tags"><span class="radius label">{{::tag}}</span> </span></p>
+							<p class="mon-taskdescription">{{::task.description}}</p>
+						</td>
+						<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
+						<td ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">
+							<div ng-show="executionsummary[task.id]">
+								<span -tooltip aria-haspopup="true" class="has-tip" title="{{ executionsummary[task.id].start_time | formatDateTime }} -> {{ executionsummary[task.id].end_time | formatDateTime }} (Duration {{ executionsummary[task.id].duration | formatDuration }})">{{ executionsummary[task.id].start_time | fromNow }}</span>
+								({{ executionsummary[task.id].status }})
+							</div>
+							<div ng-hide="executionsummary[task.id]">
+								Not executed yet
+							</div>
+						</td>
+						<td ng-hide="tagfilter == 'template'">
+							<div class="switch round small">
+								<input id="enabled-{{ ::task.id }}" type="checkbox" ng-model="task.enabled" ng-click="enableTask(task)">
+								<label for="enabled-{{ ::task.id }}"></label>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="pagination-centered" ng-if="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length > 1">
+				<ul class="pagination">
+					<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | taskhastag:tagfilter | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

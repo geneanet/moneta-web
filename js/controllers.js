@@ -184,12 +184,17 @@ monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', fun
 }]);
 
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$location', 'config', 'alert', function ($scope, $http, $stateParams, $state, $location, config, alert) {
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$location', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, $location, config, alert, clusterconfig) {
+	$scope.plugins = clusterconfig.plugins;
+
 	$scope.tabs = [
 		{ heading: "View", route:"task.view", active:true },
 		{ heading: "Edit", route:"task.edit", active:false },
-        { heading: "Audit Log", route:"task.auditlog", active:false },
 	];
+
+	if (clusterconfig.plugins.audit) {
+		$scope.tabs.push({ heading: "Audit Log", route:"task.auditlog", active:false });
+	}
 
    $scope.go = function(route){
        $state.go(route);

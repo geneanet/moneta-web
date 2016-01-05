@@ -91,3 +91,7 @@ td.mon-field {
 	background-color: #ffffff;
 	margin-top: 0px;
 }
+
+td>ul:last-child {
+	margin-bottom: 0px;
+}

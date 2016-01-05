@@ -64,3 +64,24 @@ monetaServices.factory('alert', ['$rootScope', '$timeout', function($rootScope, 
 		'delete': deleteAlert
 	};
 }]);
+
+monetaServices.factory('clusterconfig', ['$http', 'alert', 'config', '$q', function($http, alert, config, $q) {
+	var deferred = $q.defer();
+
+	$http.get(config.backend + '/plugins').success(function(data, status, headers) {
+		plugins = {};
+
+		data.forEach(function(value, index, array) {
+			plugins[value] = true;
+		});
+
+		deferred.resolve({
+			plugins: plugins
+		});
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured while fetching the plugins list, please try again !'});
+		deferred.reject('An error occured while fetching the plugins list, please try again !');
+	});
+
+	return deferred.promise;
+}]);

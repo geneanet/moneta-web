@@ -35,8 +35,8 @@
 					<tr>
 						<th>Name</th>
 						<th>Pools</th>
-						<th ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">Last execution</th>
-						<th ng-hide="tagfilter == 'template'">Enabled</th>
+						<th ng-if="tagfilter != 'template' && plugins.executionsummary">Last execution</th>
+						<th ng-if="tagfilter != 'template'">Enabled</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,16 +47,16 @@
 							<p class="mon-taskdescription">{{::task.description}}</p>
 						</td>
 						<td><span ng-repeat="pool in task.pools">{{ ::pool }}<span ng-if="!$last">, </span></span> ({{ ::task.mode }})</td>
-						<td ng-hide="tagfilter == 'template' || (plugins.indexOf('executionsummary') == -1)">
-							<div ng-show="executionsummary[task.id]">
+						<td ng-if="tagfilter != 'template' && plugins.executionsummary">
+							<div ng-if="!!executionsummary[task.id]">
 								<span -tooltip aria-haspopup="true" class="has-tip" title="{{ executionsummary[task.id].start_time | formatDateTime }} -> {{ executionsummary[task.id].end_time | formatDateTime }} (Duration {{ executionsummary[task.id].duration | formatDuration }})">{{ executionsummary[task.id].start_time | fromNow }}</span>
 								({{ executionsummary[task.id].status }})
 							</div>
-							<div ng-hide="executionsummary[task.id]">
+							<div ng-if="!executionsummary[task.id]">
 								Not executed yet
 							</div>
 						</td>
-						<td ng-hide="tagfilter == 'template'">
+						<td ng-if="tagfilter != 'template'">
 							<div class="switch round small">
 								<input id="enabled-{{ ::task.id }}" type="checkbox" ng-model="task.enabled" ng-click="enableTask(task)">
 								<label for="enabled-{{ ::task.id }}"></label>

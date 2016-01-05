@@ -45,7 +45,7 @@ monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$stateParams
 	});
 }]);
 
-monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$location', '$window', 'config', 'alert', function ($scope, $http, $stateParams, $location, $window, config, alert) {
+monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$location', '$window', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $location, $window, config, alert, clusterconfig) {
 	$scope.tagfilter = '!template'
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
@@ -62,17 +62,13 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 		alert.add({'type': 'alert', 'message': 'An error occured while fetching the tasks, please try again !'});
 	});
 
-	$http.get(config.backend + '/plugins').success(function(data, status, headers) {
-		$scope.plugins = data;
+	$scope.plugins = clusterconfig.plugins
 
-		if (data.indexOf('executionsummary') > -1) {
-			$http.get(config.backend + '/executionsummary').success(function(data, status, headers) {
-				$scope.executionsummary = data;
-			});
-		}
-	}).error(function(data, status, headers, config) {
-		alert.add({'type': 'alert', 'message': 'An error occured while fetching the plugins list, please try again !'});
-	});
+	if (clusterconfig.plugins.executionsummary) {
+		$http.get(config.backend + '/executionsummary').success(function(data, status, headers) {
+			$scope.executionsummary = data;
+		});
+	}
 
 	$scope.enableTask = function(task) {
 		if (task.enabled)

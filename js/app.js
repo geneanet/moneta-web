@@ -43,6 +43,9 @@ monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvide
 			controller: 'TaskListCtrl',
 			ncyBreadcrumb: {
 				label: 'Tasks'
+			},
+			resolve: {
+				clusterconfig: "clusterconfig"
 			}
 		})
 		.state('newtask', {
@@ -71,6 +74,9 @@ monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvide
 			ncyBreadcrumb: {
 				label: 'Task {{task.name}}',
 				parent: 'tasks'
+			},
+			resolve: {
+				clusterconfig: "clusterconfig"
 			}
 		})
 		.state('task.view', {

@@ -213,7 +213,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		$http.put(config.backend + '/tasks/' + $scope.taskId, $scope.task)
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The task has been saved.', 'timeout': 3000});
-				$location.path('/tasks');
+				$state.go('^.view');
 			}).error(function(data, status, headers, config) {
 				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
@@ -223,7 +223,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		$http.delete(config.backend + '/tasks/' + $scope.taskId, $scope.task)
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The task has been deleted.', 'timeout': 3000});
-				$location.path('/tasks');
+				$state.go('tasks');
 			}).error(function(data, status, headers, config) {
 				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
@@ -244,7 +244,7 @@ monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stat
 		$http.post(config.backend + '/tasks', $scope.task)
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The task has been created.', 'timeout': 3000});
-				$location.path('/tasks');
+				$state.go('task.view', { 'taskId': data.id });
 			}).error(function(data, status, headers, config) {
 				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});

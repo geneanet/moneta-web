@@ -337,23 +337,3 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 
 	fetchLog();
 }]);
-
-monetaControllers.controller('MainMenuCtrl', ['$scope', function ($scope) {
-	$scope.toggleMainMenu = function() {
-		$scope.showMenu = !$scope.showMenu;
-
-		btn = document.getElementById("mainmenubtn");
-		menu = document.getElementById("mainmenu");
-
-		btnpos = btn.getBoundingClientRect();
-
-		console.log(btnpos);
-
-		if ($scope.showMenu) {
-			angular.element(menu).css('left', btnpos.left + "px");
-			angular.element(menu).css('top', (btnpos.bottom + 5) + "px");
-		} else {
-			angular.element(menu).css('left', "-9999px");
-		}
-	}
-}]);

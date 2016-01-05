@@ -19,6 +19,7 @@
     "moment": "~2.9.0",
     "angular-ui-router": "~0.2.15",
     "angular-loading-spinner": ">=0.0.3",
-    "angular-breadcrumb": "~0.4.1"
+    "angular-breadcrumb": "~0.4.1",
+    "angular-foundation": "~0.8.0"
   }
 }

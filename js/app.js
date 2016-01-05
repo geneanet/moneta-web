@@ -7,7 +7,8 @@ var monetaApp = angular.module('monetaApp', [
 	'bzm-date-picker',
 	'ngLoadingSpinner',
 	'ngAnimate',
-	'ncy-angular-breadcrumb'
+	'ncy-angular-breadcrumb',
+	'mm.foundation'
 ]);
 
 monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvider) {

@@ -112,6 +112,12 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 			$scope.currentpage = 0;
 		}
 	});
+
+	$scope.addFilter = function(filter) {
+		$scope.filter = $scope.filter + filter + " ";
+	}
+
+	$scope.filter = "";
 }]);
 
 monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {

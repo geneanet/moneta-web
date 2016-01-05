@@ -344,3 +344,9 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 
 	fetchLog();
 }]);
+
+monetaControllers.controller('MainMenuCtrl', ['$scope', 'clusterconfig', '$q', function ($scope, clusterconfig, $q) {
+	$q.resolve(clusterconfig, function(clusterconfig) {
+		$scope.plugins = clusterconfig.plugins;
+	});
+}]);

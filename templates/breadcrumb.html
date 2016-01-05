@@ -6,9 +6,9 @@
 		      <span ng-switch-when="true">{{step.ncyBreadcrumbLabel}}</span>
 		    </li>
 		</ul>
-		<ul id="mainmenu" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+		<ul id="mainmenu" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1" ng-controller="MainMenuCtrl">
 			<li><a href="#/tasks">Tasks</a></li>
 			<li><a href="#/cluster">Cluster</a></li>
-			<li><a href="#/auditlog">Audit Log</a></li>
+			<li ng-if="plugins.audit"><a href="#/auditlog">Audit Log</a></li>
 		</ul>
 </div>

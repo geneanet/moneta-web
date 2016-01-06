@@ -1,7 +1,13 @@
-<table class="fullwidth">
+<table class="fullwidth" style="table-layout: fixed">
+    <thead>
+        <tr>
+            <th style="width: 15em">Field</th>
+            <th>Value</th>
+        <tr>
+    </thead>
     <tbody>
         <tr>
-            <td class="mon-field" width="1">Status</td>
+            <td class="mon-field">Status</td>
             <td>{{event['status']}}</td>
         </tr>
         <tr>
@@ -27,13 +33,13 @@
         <tr ng-if="event['stdout']">
             <td class="mon-field" width="1">Standard output</td>
             <td>
-                <pre style="overflow-y: scroll; max-height: 20em;">{{event['stdout']}}</pre>
+                <pre style="overflow: auto; max-height: 20em;">{{event['stdout']}}</pre>
             </td>
         </tr>
         <tr ng-if="event['stderr']">
             <td class="mon-field" width="1">Standard error output</td>
             <td>
-                <pre style="overflow-y: scroll; max-height: 20em;">{{event['stderr']}}</pre>
+                <pre style="overflow: auto; max-height: 20em;">{{event['stderr']}}</pre>
             </td>
         </tr>
     </tbody>

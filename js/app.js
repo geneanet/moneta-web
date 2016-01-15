@@ -38,7 +38,7 @@ monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvide
 			}
 		})
 		.state('tasks', {
-			url: "/tasks",
+			url: "/tasks?page&filter",
 			templateUrl: "templates/tasks.html",
 			controller: 'TaskListCtrl',
 			ncyBreadcrumb: {
@@ -46,7 +46,8 @@ monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvide
 			},
 			resolve: {
 				clusterconfig: "clusterconfig"
-			}
+			},
+			reloadOnSearch: false
 		})
 		.state('newtask', {
 		 	url: "/tasks/new",

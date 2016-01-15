@@ -45,7 +45,7 @@ monetaControllers.controller('NodeStatusCtrl', ['$scope', '$http', '$stateParams
 	});
 }]);
 
-monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$location', '$window', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $location, $window, config, alert, clusterconfig) {
+monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams', '$state', '$window', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, $window, config, alert, clusterconfig) {
 	$scope.tagfilter = '!template'
 
 	$http.get(config.backend + '/tasks').success(function(data, status, headers, config) {
@@ -84,7 +84,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 	$scope.filter = $stateParams.filter;
 	$scope.$watch('filter', function(newVal, oldVal) {
 		if (newVal != oldVal) {
-			$location.search('filter', newVal);
+			$state.go(".", { filter: newVal });
 			$scope.currentpage = 0;
 		}
 	});
@@ -92,7 +92,7 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 	$scope.currentpage = ($stateParams.page > 0) ? $stateParams.page - 1 : 0;
 	$scope.$watch('currentpage', function(newVal, oldVal) {
 		if (newVal != oldVal) {
-			$location.search('page', newVal + 1);
+			$state.go(".", { page: newVal + 1 });
 		}
 	});
 
@@ -110,10 +110,17 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 	});
 
 	$scope.addFilter = function(filter) {
-		$scope.filter = $scope.filter + filter + " ";
+		if ($scope.filter != "") {
+			$scope.filter = $scope.filter + " " + filter;
+		}
+		else {
+			$scope.filter = filter;
+		}
 	}
 
-	$scope.filter = "";
+	if (!$scope.filter) {
+		$scope.filter = "";
+	}
 }]);
 
 monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', function ($scope, $http, config) {
@@ -184,7 +191,7 @@ monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', fun
 }]);
 
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$location', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, $location, config, alert, clusterconfig) {
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, config, alert, clusterconfig) {
 	$scope.plugins = clusterconfig.plugins;
 
 	$scope.tabs = [
@@ -240,7 +247,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 }]);
 
 
-monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stateParams', '$location', 'config', 'alert', function ($scope, $http, $state, $stateParams, $location, config, alert) {
+monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stateParams', 'config', 'alert', function ($scope, $http, $state, $stateParams, config, alert) {
 	$scope.createTask = function() {
 		$http.post(config.backend + '/tasks', $scope.task)
 			.success(function(data, status, headers, config) {

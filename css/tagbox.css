@@ -1,0 +1,52 @@
+.tagbox {
+	border-radius: 0px;
+	background-color: #FFF;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #CCC;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1) inset;
+	color: #444;
+	display: block;
+	font-size: 0.77778rem;
+	height: 2.3125rem;
+	margin: 0px 0px 0.88889rem;
+	padding: 0.44444rem;
+	width: 100%;
+	box-sizing: border-box;
+	transition: border-color 0.15s linear 0s, background 0.15s linear 0s;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.tagbox.focus {
+	background-color: #FAFAFA;
+	border-color: #999;
+	outline: medium none;
+}
+
+.tagbox .label {
+	margin-right: 0.25rem;
+	line-height: 0.92362rem;
+	vertical-align: top;
+	cursor: default;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* IE/Edge */
+	user-select: none;           /* non-prefixed version, currently not supported by any browser */
+}
+
+.tagbox .label.selected {
+	background-color: #333;
+}
+
+.tagbox input, .tagbox input:focus {
+	border: none;
+	display: inline-block;
+	background: none;
+	box-shadow: none;
+	margin: 0px;
+	padding: 0px;
+	height: 1.42362rem;
+}

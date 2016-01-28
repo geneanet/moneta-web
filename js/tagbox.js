@@ -129,6 +129,12 @@ tagbox.directive('tagbox', function() {
 					});
 				}, 100);
             });
+
+			input.on('click', function(event) {
+				scope.$apply(function() {
+					scope.selectedtag = -1;
+				});
+            });
 		}
 	};
 });

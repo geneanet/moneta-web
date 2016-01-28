@@ -17,21 +17,7 @@
 	</div>
 	<div class="row">
 		<div class="large-12 columns">
-			<form novalidate ng-submit="addTag(newtag); newtag = '';">
-				<div class="row collapse">
-					<div class="large-11 columns">
-						<input type="text" validate-word ng-model="newtag" typeahead="tag for tag in tags | filter:$viewValue | limitTo:8" placeholder="Tag" class="form-control">
-					</div>
-					<div class="large-1 columns">
-						<button ng-disabled="!newtag" type="submit" class="tiny expand">Add</button>
-					</div>
-				</div>
-			</form>
-			<div class="row">
-				<div class="large-12 columns">
-					<span ng-repeat="tag in task.tags"><span class="radius label">{{tag}} <a ng-click="removeTag(tag)">&#x2716;</a></span> </span>
-				</div>
-			</div>
+			<tagbox ng-model="task.tags" autocomplete="tags" placeholder="Tags"/>
 		</div>
 	</div>
 
@@ -54,22 +40,7 @@
 			</select>
 		</div>
 		<div class="large-6 columns">
-			<form novalidate ng-submit="addPool(newpool); newpool = '';">
-				<div class="row collapse">
-					<div class="large-11 columns">
-						<input type="text" validate-word ng-model="newpool" typeahead="pool for pool in pools | filter:$viewValue | limitTo:8" placeholder="Pool" class="form-control">
-					</div>
-					<div class="large-1 columns">
-						<button ng-disabled="!newpool" type="submit" class="tiny expand">Add</button>
-					</div>
-				</div>
-			</form>
-			<div class="row">
-				<div class="large-12 columns">
-					<span ng-repeat="pool in task.pools"><span class="radius label">{{pool}} <a ng-click="removePool(pool)">&#x2716;</a></span> </span>
-				</div>
-			</div>
-
+			<tagbox ng-model="task.pools" autocomplete="pools" placeholder="Pools"/>
 		</div>
 	</div>
 
@@ -236,28 +207,7 @@
 	<div ng-hide="task.mailreport == 'never'">
 		<div class="row">
 			<div class="large-12 columns">
-				<label>Recipients</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-12 columns">
-				<ul class="no-bullet">
-					<li ng-repeat="recipient in task.mailto"><a ng-click="removeEMail($index)">&#x2716;</a> {{ recipient }}</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-12 columns">
-				<form novalidate ng-submit="addEMail(newmail); newmail = '';">
-					<div class="row collapse">
-						<div class="large-11 columns">
-							<input type="email" ng-model="newmail" placeholder="EMail Address">
-						</div>
-						<div class="large-1 columns">
-							<button type="submit" ng-disabled="!newmail" class="button tiny expand">Add</button>
-						</div>
-					</div>
-				</form>
+				<tagbox ng-model="task.mailto" placeholder="Recipients"/>
 			</div>
 		</div>
 	</div>

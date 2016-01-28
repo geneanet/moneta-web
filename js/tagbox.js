@@ -65,13 +65,18 @@ tagbox.directive('tagbox', function() {
 						scope.data = "";
 						event.preventDefault();
 					}
-					else if ((event.key == "Backspace" || event.key == "Delete") && input[0].selectionStart == 0)
+					else if (event.key == "Backspace" && input[0].selectionStart == 0 && input[0].selectionEnd == input[0].selectionStart)
 					{
 						if (scope.selectedtag >= 0) {
-							scope.removeTagByIndex(scope.selectedtag, event.key == "Backspace");
+							scope.removeTagByIndex(scope.selectedtag, true);
 						} else {
 							scope.removeTagByIndex(scope.tags.length - 1);
 						}
+						event.preventDefault();
+					}
+					else if (event.key == "Delete" && scope.selectedtag >= 0)
+					{
+						scope.removeTagByIndex(scope.selectedtag);
 						event.preventDefault();
 					}
 					else if (event.key == "ArrowLeft" && input[0].selectionStart == 0)

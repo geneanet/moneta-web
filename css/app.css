@@ -95,3 +95,7 @@ td.mon-field {
 td>ul:last-child {
 	margin-bottom: 0px;
 }
+
+.f-dropdown li.active {
+	background-color: #EFEFEF
+}

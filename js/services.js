@@ -10,7 +10,6 @@ monetaServices.factory('config', ['$location', function($location) {
 	            return decodeURIComponent(pair[1]);
 	        }
 	    }
-	    console.log('Query variable %s not found', variable);
 	}
 
 	backend = getQueryVariable('backend')

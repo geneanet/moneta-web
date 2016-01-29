@@ -228,13 +228,15 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 	};
 
 	$scope.deleteTask = function() {
-		$http.delete(config.backend + '/tasks/' + $scope.taskId, $scope.task)
-			.success(function(data, status, headers, config) {
-				alert.add({'type': 'success', 'message': 'The task has been deleted.', 'timeout': 3000});
-				$state.go('tasks');
-			}).error(function(data, status, headers, config) {
-				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
-			});
+		if (confirm("You are about to delete the task \"" + $scope.task.name + "\" !")) {
+			$http.delete(config.backend + '/tasks/' + $scope.taskId, $scope.task)
+				.success(function(data, status, headers, config) {
+					alert.add({'type': 'success', 'message': 'The task has been deleted.', 'timeout': 3000});
+					$state.go('tasks');
+				}).error(function(data, status, headers, config) {
+					alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
+				});
+		}
 	};
 
 	$scope.taskId = $stateParams.taskId

@@ -45,13 +45,11 @@ td.mon-field {
 
 #alerts .alert-box.ng-enter {
 	opacity:0;
-	left: -100%;
 }
 
 #alerts .alert-box.ng-enter-active {
-	transition:0.2s linear all;
+	transition:0.1s linear all;
 	opacity:1;
-	left: 0;
 }
 
 #alerts .alert-box.ng-leave {
@@ -59,8 +57,8 @@ td.mon-field {
 }
 
 @keyframes alert_closed {
-  from { opacity:1; left: 0%; }
-  to { opacity:0; left: 100% }
+  from { opacity:1; right: 0; }
+  to { opacity:0; right: -100% }
 }
 
 .tabs {

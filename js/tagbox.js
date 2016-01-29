@@ -57,7 +57,7 @@ tagbox.directive('tagbox', function() {
 				scope.tags.push(tag);
 			};
 
-			input.on('keypress', function(event) {
+			input.on('keydown', function(event) {
 				scope.$apply(function() {
 					if (event.key == "Enter" || event.key == " ")
 					{
@@ -74,12 +74,12 @@ tagbox.directive('tagbox', function() {
 						}
 						event.preventDefault();
 					}
-					else if (event.key == "Delete" && scope.selectedtag >= 0)
+					else if ((event.key == "Delete" || event.key == "Del") && scope.selectedtag >= 0)
 					{
 						scope.removeTagByIndex(scope.selectedtag);
 						event.preventDefault();
 					}
-					else if (event.key == "ArrowLeft" && input[0].selectionStart == 0)
+					else if ((event.key == "ArrowLeft" || event.key == "Left") && input[0].selectionStart == 0)
 					{
 						if (scope.selectedtag == -1) {
 							scope.selectedtag = scope.tags.length -1;
@@ -92,7 +92,7 @@ tagbox.directive('tagbox', function() {
 						}
 						event.preventDefault();
 					}
-					else if (event.key == "ArrowRight" && scope.selectedtag < scope.tags.length && scope.selectedtag >= 0)
+					else if ((event.key == "ArrowRight" || event.key == "Right") && scope.selectedtag < scope.tags.length && scope.selectedtag >= 0)
 					{
 						if (scope.selectedtag == scope.tags.length - 1) {
 							scope.selectedtag = -1;

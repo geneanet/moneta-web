@@ -284,6 +284,20 @@ monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stat
 	}
 }]);
 
+monetaControllers.controller('RestoreTaskCtrl', ['$scope', '$http', '$state', 'config', 'alert', function ($scope, $http, $state, config, alert) {
+	$scope.restoreTask = function() {
+		if (confirm("You are about to restore task \"" + $scope.task.name + "\"")) {
+			$http.put(config.backend + '/tasks/' + $scope.taskId, $scope.task)
+				.success(function(data, status, headers, config) {
+					alert.add({'type': 'success', 'message': 'The task has been restored.', 'timeout': 3000});
+					$state.go('task.view', { 'taskId': $scope.taskId }, { 'reload': true});
+				}).error(function(data, status, headers, config) {
+					alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
+				});
+		}
+	};
+}]);
+
 monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'alert', function ($scope, $http, config, alert) {
 	fetchLog = function() {
 		from = moment($scope.from).startOf('day').toISOString();

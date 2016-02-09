@@ -66,12 +66,12 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="schedule in task.schedules">
-						<td>{{ schedule.month.join(',') }}</td>
-						<td>{{ schedule.week.join(',') }}</td>
-						<td>{{ schedule.dayofmonth.join(',') }}</td>
-						<td>{{ schedule.dayofweek.join(',') }}</td>
-						<td>{{ schedule.hour.join(',') }}</td>
-						<td>{{ schedule.minute.join(',') }}</td>
+						<td>{{ schedule.month.join(',') || '*' }}</td>
+						<td>{{ schedule.week.join(',') || '*' }}</td>
+						<td>{{ schedule.dayofmonth.join(',') || '*' }}</td>
+						<td>{{ schedule.dayofweek.join(',') || '*' }}</td>
+						<td>{{ schedule.hour.join(',') || '*' }}</td>
+						<td>{{ schedule.minute.join(',') || '*' }}</td>
 						<td><a ng-click="removeSchedule($index)">&#x2716;</a></td>
 					</tr>
 				</tbody>

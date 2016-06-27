@@ -6,7 +6,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 			return items;
 		}
 
-		expression = expression.toLowerCase().split(" ")
+		expression = S(expression).latinise().toLowerCase().toString().split(" ");
 
 		var result = [];
 
@@ -14,7 +14,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 		{
 			for (var t = 0; t < task.pools.length; t++)
 			{
-				if (task.pools[t].toLowerCase().indexOf(pool) > -1)
+				if (S(task.pools[t]).latinise().toLowerCase().contains(pool))
 					return true;
 			}
 
@@ -25,7 +25,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 		{
 			for (var t = 0; t < task.tags.length; t++)
 			{
-				if (task.tags[t].toLowerCase().indexOf(tag) > -1)
+				if (S(task.tags[t]).latinise().toLowerCase().contains(tag))
 					return true;
 			}
 
@@ -34,7 +34,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 
 		function match_title(task, title)
 		{
-			return task.name.toLowerCase().indexOf(title) > -1;
+			return S(task.name).latinise().toLowerCase().contains(title);
 		}
 
 		function xor(a,b)
@@ -53,7 +53,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 					negate = true;
 					item = item.substr(1);
 				}
-				
+
 				if (item.lastIndexOf('tag:', 0) === 0)
 				{
 					item = item.substr(4);
@@ -83,7 +83,7 @@ monetaFilters.filter('taskfilter', function ($filter) {
 					if (xor(negate, !task.enabled))
 						return;
 				}
-				else 
+				else
 				{
 					if (xor(negate, !(match_title(task, item) || match_tag(task, item))))
 						return;

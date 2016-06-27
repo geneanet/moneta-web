@@ -14,14 +14,18 @@
     	</div>
     </div>
 
-    <div class="row" ng-if="pages.length > 1">
+    <div class="row" ng-show="pages > 1">
     	<div class="columns large-12">
-    		<div class="pagination-centered">
-    			<ul class="pagination">
-    				<li ng-repeat-start="page in pages" ng-show="(page > (currentpage - 5)) && (page < (currentpage + 5)) || page == 0 || page == pages.length - 1" ng-class="{current: page == currentpage}"><a href="" ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
-                    <li ng-repeat-end ng-if="(page == 0 && currentpage > 5) || (page == pages.length - 2 && currentpage < pages.length - 6)" class="unavailable"><a href="">&hellip;</a></li>
-    			</ul>
-    		</div>
+            <div
+                paging
+                class="pagination-centered"
+                page="currentpage"
+                total="pages"
+                ul-class="pagination"
+                active-class="current"
+                disabled-class="unavailable"
+                paging-action="currentpage = page">
+            </div>
     	</div>
     </div>
 
@@ -62,14 +66,18 @@
         </div>
     </div>
 
-    <div class="row" ng-if="pages.length > 1">
+    <div class="row" ng-show="pages > 1">
     	<div class="columns large-12">
-    		<div class="pagination-centered">
-    			<ul class="pagination">
-    				<li ng-repeat-start="page in pages" ng-show="(page > (currentpage - 5)) && (page < (currentpage + 5)) || page == 0 || page == pages.length - 1" ng-class="{current: page == currentpage}"><a href="" ng-click="$parent.$parent.currentpage = page">{{page + 1}}</button></li>
-                    <li ng-repeat-end ng-if="(page == 0 && currentpage > 5) || (page == pages.length - 2 && currentpage < pages.length - 6)" class="unavailable"><a href="">&hellip;</a></li>
-    			</ul>
-    		</div>
+            <div
+                paging
+                class="pagination-centered"
+                page="currentpage"
+                total="pages"
+                ul-class="pagination"
+                active-class="current"
+                disabled-class="unavailable"
+                paging-action="currentpage = page">
+            </div>
     	</div>
     </div>
 </div>

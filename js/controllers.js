@@ -307,7 +307,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 		if ($scope.taskId) {
 			url = url + '/tasks/' + $scope.taskId;
 		}
-		url = url + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + ($scope.currentpage * $scope.eventsperpage);
+		url = url + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + (($scope.currentpage - 1) * $scope.eventsperpage);
 
 		$http.get(url).success(function(data, status, headers, config) {
 			data.records.forEach(function(event) {
@@ -325,8 +325,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 				}
 			});
 
-			var pages = Math.ceil(data.count / data.limit);
-			$scope.pages = Array.apply(null, Array(pages)).map(function (_, i) {return i;});
+			$scope.pages = Math.ceil(data.count / data.limit);
 			$scope.count = data.count;
 			$scope.auditlog = data.records;
 		}).error(function(data, status, headers, config) {
@@ -336,7 +335,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 
 	dateUpdated = function(newValue, oldValue) {
 		if (!(newValue === oldValue)) {
-			$scope.currentpage = 0;
+			$scope.currentpage = 1;
 			fetchLog();
 		}
 	};
@@ -356,7 +355,7 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 	}
 
 	$scope.eventsperpage = 50;
-	$scope.currentpage = 0;
+	$scope.currentpage = 1;
 	$scope.today = moment().toDate();
 	$scope.from = moment().subtract(1, 'days').toDate();
 	$scope.until = moment().toDate();

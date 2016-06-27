@@ -85,27 +85,23 @@ monetaControllers.controller('TaskListCtrl', ['$scope', '$http', '$stateParams',
 	$scope.$watch('filter', function(newVal, oldVal) {
 		if (newVal != oldVal) {
 			$state.go(".", { filter: newVal });
-			$scope.currentpage = 0;
+			$scope.currentpage = 1;
 		}
 	});
 
-	$scope.currentpage = ($stateParams.page > 0) ? $stateParams.page - 1 : 0;
+	$scope.currentpage = ($stateParams.page > 0) ? $stateParams.page : 1;
 	$scope.$watch('currentpage', function(newVal, oldVal) {
 		if (newVal != oldVal) {
-			$state.go(".", { page: newVal + 1 });
+			$state.go(".", { page: newVal });
+			$window.scrollTo(0,0);
 		}
 	});
 
 	$scope.tasksperpage = 25;
 
-	$scope.changePage = function(page) {
-		$scope.currentpage = page;
-		$window.scrollTo(0,0);
-	};
-
 	$scope.$watch('tagfilter', function(newVal, oldVal) {
 		if (newVal != oldVal) {
-			$scope.currentpage = 0;
+			$scope.currentpage = 1;
 		}
 	});
 

@@ -24,11 +24,17 @@
 	        <li class="tab-title" ng-class="{active: tagfilter == 'template'}" ><a href="" ng-click="tagfilter = 'template'">Templates ({{(filtered | taskhastag:'template').length}})</a></li>
 	    </ul>
 		<div class="tabs-content">
-			<div class="pagination-centered" ng-if="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length > 1">
-				<ul class="pagination">
-					<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | taskhastag:tagfilter | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
-				</ul>
-			</div>
+			<div
+                paging
+                class="pagination-centered"
+                page="currentpage"
+                total="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length"
+                ul-class="pagination"
+                active-class="current"
+                disabled-class="unavailable"
+				ng-show="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length > 1"
+				>
+            </div>
 
 			<table class="fullwidth">
 				<thead>
@@ -40,7 +46,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="task in filtered = (tasks | taskfilter:filter) | taskhastag:tagfilter | offset:currentpage*tasksperpage | limitTo: tasksperpage">
+					<tr ng-repeat="task in filtered = (tasks | taskfilter:filter) | taskhastag:tagfilter | offset:(currentpage-1)*tasksperpage | limitTo: tasksperpage">
 						<td>
 							<h4 class="mon-taskname"><a ng-href="#/tasks/{{::task.id}}/view">{{::task.name}}</a></h4>
 							<p class="mon-taglist"><span ng-repeat="tag in task.tags"><a href="" ng-click="addFilter('tag:' + tag)"><span class="radius label">{{::tag}}</span></a> </span></p>
@@ -66,11 +72,17 @@
 				</tbody>
 			</table>
 
-			<div class="pagination-centered" ng-if="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length > 1">
-				<ul class="pagination">
-					<li ng-class="{current: page == currentpage}" ng-repeat="page in filtered | taskhastag:tagfilter | paginate:tasksperpage"><button ng-click="changePage(page)">{{page + 1}}</button></li>
-				</ul>
-			</div>
+			<div
+                paging
+                class="pagination-centered"
+                page="currentpage"
+                total="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length"
+                ul-class="pagination"
+                active-class="current"
+                disabled-class="unavailable"
+				ng-show="(filtered | taskhastag:tagfilter | paginate:tasksperpage).length > 1"
+				>
+            </div>
 		</div>
 	</div>
 </div>

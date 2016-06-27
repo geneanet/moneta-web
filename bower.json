@@ -21,6 +21,7 @@
     "angular-loading-spinner": ">=0.0.3",
     "angular-breadcrumb": "~0.4.1",
     "angular-foundation": "~0.8.0",
+    "angular-paging": "~2.2.2",
     "string": "~3.3.1"
   }
 }

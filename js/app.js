@@ -9,7 +9,8 @@ var monetaApp = angular.module('monetaApp', [
 	'ngLoadingSpinner',
 	'ngAnimate',
 	'ncy-angular-breadcrumb',
-	'mm.foundation'
+	'mm.foundation',
+	'bw.paging'
 ]);
 
 monetaApp.config(function($stateProvider, $urlRouterProvider, $breadcrumbProvider) {

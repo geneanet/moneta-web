@@ -308,17 +308,6 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 		$http.get(url).success(function(data, status, headers, config) {
 			data.records.forEach(function(event) {
 				event['show'] = false;
-
-				if ((event['@type'] == "moneta-task-report" && event['status'] != 'ok')
-				   || (event['@type'] == "moneta-task-execution" && !event['success'])) {
-					event['@status'] = "alert";
-				}
-				else if (event['@type'] == "moneta-task-report" && event['status'] == 'ok') {
-					event['@status'] = "success";
-				}
-				else {
-					event['@status'] = "info";
-				}
 			});
 
 			$scope.pages = Math.ceil(data.count / data.limit);

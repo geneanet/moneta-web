@@ -299,11 +299,20 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 		from = moment($scope.from).startOf('day').toISOString();
 		until = moment($scope.until).endOf('day').toISOString();
 
+		levelfilter = [];
+		console.log($scope.levelfilter);
+		angular.forEach($scope.levelfilter, function(value, key) {
+			if (value) {
+				levelfilter.push(key);
+			}
+		});
+		levelfilter = levelfilter.join(',');
+
 		url = config.backend;
 		if ($scope.taskId) {
 			url = url + '/tasks/' + $scope.taskId;
 		}
-		url = url + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + (($scope.currentpage - 1) * $scope.eventsperpage);
+		url = url + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + (($scope.currentpage - 1) * $scope.eventsperpage) + '&level=' + levelfilter;
 
 		$http.get(url).success(function(data, status, headers, config) {
 			data.records.forEach(function(event) {
@@ -312,13 +321,14 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 
 			$scope.pages = Math.ceil(data.count / data.limit);
 			$scope.count = data.count;
+			$scope.levels = data.levels;
 			$scope.auditlog = data.records;
 		}).error(function(data, status, headers, config) {
 			alert.add({'type': 'alert', 'message': 'An error occured while fetching the audit log, please try again !'});
 		});
 	};
 
-	dateUpdated = function(newValue, oldValue) {
+	filterUpdated = function(newValue, oldValue) {
 		if (!(newValue === oldValue)) {
 			$scope.currentpage = 1;
 			fetchLog();
@@ -344,10 +354,17 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 	$scope.today = moment().toDate();
 	$scope.from = moment().subtract(1, 'days').toDate();
 	$scope.until = moment().toDate();
+	$scope.levelfilter = {
+		'info': true,
+		'success': true,
+		'warning': true,
+		'alert': true
+	}
 
 	$scope.$watch('currentpage', pageUpdated);
-	$scope.$watch('from', dateUpdated);
-	$scope.$watch('until', dateUpdated);
+	$scope.$watch('from', filterUpdated);
+	$scope.$watch('until', filterUpdated);
+	$scope.$watch('levelfilter', filterUpdated, true);
 
 	fetchLog();
 }]);

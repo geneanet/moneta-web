@@ -300,7 +300,6 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 		until = moment($scope.until).endOf('day').toISOString();
 
 		levelfilter = [];
-		console.log($scope.levelfilter);
 		angular.forEach($scope.levelfilter, function(value, key) {
 			if (value) {
 				levelfilter.push(key);
@@ -308,11 +307,19 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 		});
 		levelfilter = levelfilter.join(',');
 
+		typefilter = [];
+		angular.forEach($scope.typefilter, function(value, key) {
+			if (value) {
+				typefilter.push(key);
+			}
+		});
+		typefilter = typefilter.join(',');
+
 		url = config.backend;
 		if ($scope.taskId) {
 			url = url + '/tasks/' + $scope.taskId;
 		}
-		url = url + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + (($scope.currentpage - 1) * $scope.eventsperpage) + '&level=' + levelfilter;
+		url = url + '/auditlog?from=' + from + '&until=' + until + '&limit=' + $scope.eventsperpage + '&offset=' + (($scope.currentpage - 1) * $scope.eventsperpage) + '&level=' + levelfilter + '&type=' + typefilter;
 
 		$http.get(url).success(function(data, status, headers, config) {
 			data.records.forEach(function(event) {
@@ -322,10 +329,21 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 			$scope.pages = Math.ceil(data.count / data.limit);
 			$scope.count = data.count;
 			$scope.levels = data.levels;
+			$scope.types = data.types;
 			$scope.auditlog = data.records;
 		}).error(function(data, status, headers, config) {
 			alert.add({'type': 'alert', 'message': 'An error occured while fetching the audit log, please try again !'});
 		});
+	};
+
+	$scope.enableFilter = function(filters, filter, $event) {
+		if ($event && $event.ctrlKey) {
+			filters[filter] = !filters[filter];
+		} else {
+			angular.forEach(filters, function (value, key) {
+				filters[key] = (key == filter);
+			});
+		}
 	};
 
 	filterUpdated = function(newValue, oldValue) {
@@ -354,17 +372,35 @@ monetaControllers.controller('AuditLogCtrl', ['$scope', '$http', 'config', 'aler
 	$scope.today = moment().toDate();
 	$scope.from = moment().subtract(1, 'days').toDate();
 	$scope.until = moment().toDate();
-	$scope.levelfilter = {
-		'info': true,
-		'success': true,
-		'warning': true,
-		'alert': true
-	}
 
 	$scope.$watch('currentpage', pageUpdated);
 	$scope.$watch('from', filterUpdated);
 	$scope.$watch('until', filterUpdated);
 	$scope.$watch('levelfilter', filterUpdated, true);
+	$scope.$watch('typefilter', filterUpdated, true);
+
+	$scope.levels_map = {
+		'info': 'Info',
+		'success': 'Success',
+		'warning': 'Warning',
+		'alert': 'Alert'
+	};
+	$scope.levelfilter = {};
+	angular.forEach($scope.levels_map, function(value, key) {
+		$scope.levelfilter[key] = true;
+	});
+
+	$scope.types_map = {
+		'moneta-task-created': 'Creation',
+		'moneta-task-updated': 'Update',
+		'moneta-task-deleted': 'Deletion',
+		'moneta-task-execution': 'Execution',
+		'moneta-task-report': 'Execution Report'
+	};
+	$scope.typefilter = {};
+	angular.forEach($scope.types_map, function(value, key) {
+		$scope.typefilter[key] = true;
+	});
 
 	fetchLog();
 }]);

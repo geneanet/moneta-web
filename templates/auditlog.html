@@ -9,33 +9,22 @@
     </div>
 
     <div class="row" style="margin-bottom: 1rem">
-        <div class="columns small-3">
-            <div class="switch tiny left radius" style="margin-right: 0.7rem;">
-                <input id="level_switch_info" type="checkbox" ng-model="levelfilter.info">
-                <label for="level_switch_info"></label>
-            </div>
-            Info ({{ 0 + levels.info }})
+        <div class="columns small-12">
+            <label>Severity level</label>
+            <span class="label" style="margin-right: 1rem; cursor: pointer;" ng-class="{'{{level}}': levelfilter[level], 'secondary': !levelfilter[level]}" ng-repeat="(level,caption) in levels_map" ng-click="enableFilter(levelfilter, level, $event)" title="Click to select one value, ctrl+click to select multiple values.">{{caption}} ({{0 + levels[level]}})</span>
         </div>
-        <div class="columns small-3">
-            <div class="switch tiny left radius" style="margin-right: 0.7rem;">
-                <input id="level_switch_success" type="checkbox" ng-model="levelfilter.success">
-                <label for="level_switch_success"></label>
-            </div>
-            Success ({{ 0 + levels.success }})
+    </div>
+
+    <div class="row" style="margin-bottom: 1rem">
+        <div class="columns small-12">
+            <label>Record type</label>
+            <span class="label" style="margin-right: 1rem; cursor: pointer;" ng-class="{'{{type}}': typefilter[type], 'secondary': !typefilter[type]}" ng-repeat="(type,caption) in types_map" ng-click="enableFilter(typefilter, type, $event)" title="Click to select one value, ctrl+click to select multiple values.">{{caption}} ({{0 + types[type]}})</span>
         </div>
-        <div class="columns small-3">
-            <div class="switch tiny left radius" style="margin-right: 0.7rem;">
-                <input id="level_switch_warning" type="checkbox" ng-model="levelfilter.warning">
-                <label for="level_switch_warning"></label>
-            </div>
-            Warning ({{ 0 + levels.warning }})
-        </div>
-        <div class="columns small-3">
-            <div class="switch tiny left radius" style="margin-right: 0.7rem;">
-                <input id="level_switch_alert" type="checkbox" ng-model="levelfilter.alert">
-                <label for="level_switch_alert"></label>
-            </div>
-            Alert ({{ 0 + levels.alert }})
+    </div>
+
+    <div class="row" style="margin-bottom: 1rem">
+        <div class="columns small-12">
+            <h4>{{count}} results</h4>
         </div>
     </div>
 
@@ -68,14 +57,8 @@
                         <td>{{event['@timestamp'] | formatDateTime}}</td>
                         <td>
                             <a href="" style="display: block"  ng-click="event.show = !event.show">
-                                <span ng-show="event['@level']" class="right label {{event['@level']}}">{{event['@level']}}</span>
-                                <span ng-switch="event['@type']" style="font-weight: bold">
-                                    <span ng-switch-when="moneta-task-created">Creation</span>
-                                    <span ng-switch-when="moneta-task-updated">Update</span>
-                                    <span ng-switch-when="moneta-task-deleted">Deletion</span>
-                                    <span ng-switch-when="moneta-task-execution">Execution</span>
-                                    <span ng-switch-when="moneta-task-report">Execution Report</span>
-                                </span>
+                                <span ng-show="event['@level']" class="right label {{event['@level']}}">{{ levels_map[event['@level']] }}</span>
+                                <span style="font-weight: bold">{{ types_map[event['@type']] }}</span>
                                 <span ng-show="!taskId">({{tasks[event.task].name}})</span>
                             </a>
                         </td>

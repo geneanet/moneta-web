@@ -235,10 +235,30 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		}
 	};
 
+	$scope.executeTask = function() {
+		if (confirm("You are about to execute the task \"" + $scope.task.name + "\" .")) {
+			$http({
+				method: 'EXECUTE',
+				url: config.backend + '/tasks/' + $scope.taskId
+			})
+			.success(function(data, status, headers, config) {
+				alert.add({'type': 'success', 'message': 'The task has been executed.', 'timeout': 3000});
+			}).error(function(data, status, headers, config) {
+				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
+			});
+		}
+	};
+
 	$scope.taskId = $stateParams.taskId
 
 	$http.get(config.backend + '/tasks/' + $stateParams.taskId).success(function(data, status, headers, config) {
 		$scope.task = data;
+	}).error(function(data, status, headers, config) {
+		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
+	});
+
+	$http.get(config.backend + '/tasks/' + $stateParams.taskId + '/running').success(function(data, status, headers, config) {
+		$scope.running = data.running;
 	}).error(function(data, status, headers, config) {
 		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 	});

@@ -193,6 +193,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 	$scope.tabs = [
 		{ heading: "View", route:"task.view", active:true },
 		{ heading: "Edit", route:"task.edit", active:false },
+		{ heading: "Processes", route:"task.processes", active:false },
 	];
 
 	if (clusterconfig.plugins.audit) {
@@ -257,8 +258,11 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 	});
 
-	$http.get(config.backend + '/tasks/' + $stateParams.taskId + '/running').success(function(data, status, headers, config) {
-		$scope.running = data.running;
+	$http.get(config.backend + '/tasks/' + $stateParams.taskId + '/processes').success(function(data, status, headers, config) {
+		$scope.running_processes = data;
+		if (Object.keys(data).length > 0) {
+			$scope.running = true;
+		}
 	}).error(function(data, status, headers, config) {
 		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 	});

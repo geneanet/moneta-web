@@ -1,0 +1,19 @@
+<h3>Processes</h3>
+<div class="row">
+	<div class="large-12 columns">
+		<table class="fullwidth">
+			<thead>
+				<th>Node</th>
+				<th>Started</th>
+				<th>Process ID</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(processid, process) in running_processes">
+					<td><a ng-href="#/cluster/node/{{ ::process.node }}">{{ ::process.node }}</a></td>
+					<td>{{ ::process.started | formatDateTime }} ({{ ::process.started | fromNow }})</td>
+					<td>{{ ::processid }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

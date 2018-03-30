@@ -28,22 +28,44 @@
 	</div>
 
 	<div class="row">
-		<div class="large-12 columns">
-				<label for="enabled"><input id="enabled" type="checkbox" ng-model="task.enabled"> Execution enabled</label>
+		<div class="large-4 columns">
+			<label class="inline" for="enabled">Execution enabled</label>
+		</div>
+		<div class="large-8 columns">
+			<div class="switch round small">
+				<input id="enabled" type="checkbox" ng-model="task.enabled">
+				<label for="enabled"></label>
+			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="large-6 columns">
-			<select ng-model="task.mode">
+		<div class="large-4 columns">
+			<label class="inline" for="mode">Execution Mode</label>
+		</div>
+		<div class="large-8 columns">
+			<select ng-model="task.mode" id="mode">
 				<option value="any" default>Any server in the pool(s)</option>
 				<option value="all">Every server in the pool(s)</option>
 			</select>
 		</div>
-		<div class="large-6 columns">
-			<tagbox ng-model="task.pools" autocomplete="pools" placeholder="Pools"/>
+	</div>
+	<div class="row">
+		<div class="large-4 columns">
+			<label class="inline" for="pools">Pools</label>
+		</div>
+		<div class="large-8 columns">
+			<tagbox inputid="pools" ng-model="task.pools" autocomplete="pools" placeholder="Pools"/>
 		</div>
 	</div>
-
+	<div class="row">
+			<div class="large-4 columns">
+				<label for="concurrency" class="inline">Maximum concurrency (0 = infinity)</label>
+			</div>
+			<div class="large-8 columns">
+					<input id="concurrency" type="number" required ng-model="task.concurrency" min="0" placeholder="Maximum Concurrency">
+			</div>
+		</div>
+	
 	<div class="row">
 		<div class="large-12 columns">
 			<h3>Schedule</h3>

@@ -32,7 +32,11 @@
             <td class="mon-field" width="1">Pools</td>
             <td><span ng-repeat="pool in task.pools"><span class="radius label">{{pool}}</span> </span></td>
         </tr>
-	</tbody>
+		<tr ng-if="task.concurrency > 0">
+			<td class="mon-field" width="1">Maximum concurrency</td>
+			<td>{{task.concurrency}}</td>
+		</tr>
+		</tbody>
 </table>
 
 <h3>Schedule</h3>

@@ -254,6 +254,9 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 
 	$http.get(config.backend + '/tasks/' + $stateParams.taskId).success(function(data, status, headers, config) {
 		$scope.task = data;
+		if (typeof($scope.task.concurrency) === "undefined") {
+			$scope.task.concurrency = 0;
+		}			
 	}).error(function(data, status, headers, config) {
 		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 	});

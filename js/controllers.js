@@ -187,7 +187,7 @@ monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', fun
 }]);
 
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, config, alert, clusterconfig) {
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$interval', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, $interval, config, alert, clusterconfig) {
 	$scope.plugins = clusterconfig.plugins;
 
 	$scope.tabs = [
@@ -244,11 +244,28 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 			})
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The task has been executed.', 'timeout': 3000});
+				$scope.fetchTaskProcesses();
 			}).error(function(data, status, headers, config) {
 				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
 		}
 	};
+	
+	$scope.fetchTaskProcesses = function() {
+		$http.get(config.backend + '/tasks/' + $stateParams.taskId + '/processes').success(function(data, status, headers, config) {
+			$scope.running_processes = data;
+			$scope.running = (Object.keys(data).length > 0)
+		}).error(function(data, status, headers, config) {
+			alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
+		});
+	}
+
+	$scope.fetchTaskProcesses();
+
+	$scope.processesTimer = $interval($scope.fetchTaskProcesses, 10000);
+	$scope.$on('$destroy', function() {
+		$interval.cancel($scope.processesTimer);
+	});
 
 	$scope.taskId = $stateParams.taskId
 
@@ -261,14 +278,6 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 	});
 
-	$http.get(config.backend + '/tasks/' + $stateParams.taskId + '/processes').success(function(data, status, headers, config) {
-		$scope.running_processes = data;
-		if (Object.keys(data).length > 0) {
-			$scope.running = true;
-		}
-	}).error(function(data, status, headers, config) {
-		alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
-	});
 }]);
 
 

@@ -6,9 +6,10 @@ tagbox.directive('tagbox', function() {
 		scope: {
 			tags: '=ngModel',
 			autocomplete: '=',
+			inputid: "@",
 			placeholder: "@"
 		},
-		template: '<span ng-repeat="tag in tags"><span class="radius label" ng-class="{selected: $index == selectedtag}" ng-click="selectTagByIndex($index)">{{tag}} <a ng-click="removeTagByIndex($index)">&#x2716;</a></span></span><input type="text" placeholder="{{placeholder}}" ng-model="data" typeahead="item for item in autocomplete | filter:$viewValue | limitTo:8" typeahead-on-select="addTag(data); data=\'\'">',
+		template: '<span ng-repeat="tag in tags"><span class="radius label" ng-class="{selected: $index == selectedtag}" ng-click="selectTagByIndex($index)">{{tag}} <a ng-click="removeTagByIndex($index)">&#x2716;</a></span></span><input type="text" placeholder="{{placeholder}}" id="{{inputid}}" ng-model="data" typeahead="item for item in autocomplete | filter:$viewValue | limitTo:8" typeahead-on-select="addTag(data); data=\'\'">',
 		link: function(scope, tagbox, attrs, controller) {
 			var input = angular.element(tagbox.find('input')[0]);
 

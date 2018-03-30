@@ -254,7 +254,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 	$scope.fetchTaskProcesses = function() {
 		$http.get(config.backend + '/tasks/' + $stateParams.taskId + '/processes').success(function(data, status, headers, config) {
 			$scope.running_processes = data;
-			$scope.running = (Object.keys(data).length > 0)
+			$scope.running_processes_count = Object.keys(data).length;
 		}).error(function(data, status, headers, config) {
 			alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 		});

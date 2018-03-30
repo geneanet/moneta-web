@@ -1,15 +1,10 @@
-<div class="row" ng-if="running">
-	<div class="columns large-12">
-		<div data-alert class="alert-box success radius">
-			The task is currently running.
-	  	</div>
-	</div>
-</div>
-
 <div class="row">
 	  <div class="columns large-12">
 		<ul class="tabs">
-			<li class="tab-title" ng-repeat="t in tabs" ng-class="{active: t.active}" ><a href="" ng-click="go(t.route)">{{t.heading}}</a></li>
+			<li class="tab-title" ng-repeat="t in tabs" ng-class="{active: t.active}" ><a href="" ng-click="go(t.route)">
+				<span class="round label" ng-if="t.route == 'task.processes' && running_processes_count > 0">{{ running_processes_count }}</span>
+				{{t.heading}}
+			</a></li>
 		</ul>
 		<div class="tabs-content" ui-view></div>
 	</div>

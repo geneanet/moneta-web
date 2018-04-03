@@ -24,7 +24,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="(node, details) in cluster.nodes">
-					<td><a ng-href="#/cluster/node/{{ ::node }}">{{ ::node }}</a></td>
+					<td><a ng-href="#/cluster/node/{{ ::node }}">{{ ::node }} <span ng-if="details.status.leader" class="fas fa-star"></span></a></td>
 					<td>{{ ::details.address }}</td>
 					<td><span ng-repeat="pool in details.pools">{{ ::pool }}<span ng-if="!$last">, </span></span></td>
 					<td>{{ details.status.running_processes | keyLength }}</td>

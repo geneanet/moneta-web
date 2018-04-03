@@ -11,12 +11,14 @@
 				<th>Node</th>
 				<th>Started</th>
 				<th>Process ID</th>
+				<th></th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="(processid, process) in running_processes">
 					<td><a ng-href="#/cluster/node/{{ ::process.node }}">{{ ::process.node }}</a></td>
 					<td>{{ ::process.started | formatDateTime }} ({{ ::process.started | fromNow }})</td>
 					<td>{{ ::processid }}</td>
+					<td><button class="button tiny" style="margin: 0" ng-click="killProcess(processid)">Kill</button></td>
 				</tr>
 			</tbody>
 		</table>

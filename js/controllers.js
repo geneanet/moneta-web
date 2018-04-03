@@ -200,19 +200,34 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		$scope.tabs.push({ heading: "Audit Log", route:"task.auditlog", active:false });
 	}
 
-   $scope.go = function(route){
-       $state.go(route);
-   };
+    $scope.go = function(route){
+        $state.go(route);
+    };
 
-   $scope.active = function(route){
-       return $state.is(route);
-   };
+    $scope.active = function(route){
+        return $state.is(route);
+    };
 
-   $scope.$on("$stateChangeSuccess", function() {
-       $scope.tabs.forEach(function(tab) {
-           tab.active = $scope.active(tab.route);
-       });
-   });
+    $scope.$on("$stateChangeSuccess", function() {
+        $scope.tabs.forEach(function(tab) {
+            tab.active = $scope.active(tab.route);
+        });
+    });
+
+    $scope.killProcess = function(processid) {
+		if (confirm("You are about to kill the process \"" + processid + "\" .")) {
+			$http({
+				method: 'KILL',
+				url: config.backend + '/processes/' + processid
+			})
+			.success(function(data, status, headers, config) {
+				alert.add({'type': 'success', 'message': 'The process has been killed.', 'timeout': 3000});
+				$scope.fetchTaskProcesses();
+			}).error(function(data, status, headers, config) {
+				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
+			});
+		}
+	};
 
 	$scope.saveTask = function() {
 		$http.put(config.backend + '/tasks/' + $scope.taskId, $scope.task)

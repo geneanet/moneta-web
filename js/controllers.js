@@ -187,7 +187,7 @@ monetaControllers.controller('TaskEditorCtrl', ['$scope', '$http', 'config', fun
 }]);
 
 
-monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$interval', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, $interval, config, alert, clusterconfig) {
+monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams', '$state', '$interval', '$timeout', 'config', 'alert', 'clusterconfig', function ($scope, $http, $stateParams, $state, $interval, $timeout, config, alert, clusterconfig) {
 	$scope.plugins = clusterconfig.plugins;
 
 	$scope.tabs = [
@@ -222,7 +222,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 			})
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The process has been killed.', 'timeout': 3000});
-				$scope.fetchTaskProcesses();
+				$timeout($scope.fetchTaskProcesses, 500);
 			}).error(function(data, status, headers, config) {
 				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});
@@ -259,7 +259,7 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 			})
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The task has been executed.', 'timeout': 3000});
-				$scope.fetchTaskProcesses();
+				$timeout($scope.fetchTaskProcesses, 500);
 			}).error(function(data, status, headers, config) {
 				alert.add({'type': 'alert', 'message': 'An error occured, please try again !'});
 			});

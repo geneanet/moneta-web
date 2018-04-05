@@ -50,7 +50,7 @@
 				<tr ng-repeat="process in processes">
 					<td>{{ ::process.node }}</td>
 					<td><a ng-href="#/tasks/{{ ::process.task }}/view">{{ ::tasks[process.task].name }}</a></td>
-					<td>{{ ::process.started | fromNow }}</td>
+					<td>{{ ::process.start_time | fromNow }}</td>
 				</tr>
 			</tbody>
 		</table>

@@ -12,7 +12,7 @@ monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 
 				angular.forEach(data['running_processes'], function(value, key) {
 					$scope.processes[key] = {
 						'node': data['name'],
-						'started': value['started'],
+						'start_time': value['start_time'],
 						'task': value['task']
 					}
 				});

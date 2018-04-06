@@ -315,12 +315,16 @@ monetaControllers.controller('NewTaskCtrl', ['$scope', '$http', '$state', '$stat
 			$scope.task.name = ""
 			$scope.task.description = ""
 			$scope.task.tags.splice($scope.task.tags.indexOf('template'), 1);
+			if (typeof($scope.task.concurrency) === "undefined") {
+				$scope.task.concurrency = 0;
+			}
 		}).error(function(data, status, headers, config) {
 			alert.add({'type': 'alert', 'message': 'An error occured while fetching the template, please try again !'});
 		});
 	} else {
 		$scope.task = {
 			'tags': [],
+			'concurrency': 0,
 			'env': {},
 			'schedules': [],
 			'mailto': [],

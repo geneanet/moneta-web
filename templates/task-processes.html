@@ -1,7 +1,14 @@
 <h3>Processes</h3>
 <div class="row">
 	<div class="large-12 columns">
-		<button class="button" ng-click="executeTask()">Execute Task</button>
+		<a class="button split" ng-click="executeTask(false)">
+			Execute Task
+			<span dropdown-toggle="#execution-menu"></span>
+		</a>
+
+		<ul id="execution-menu" class="f-dropdown">
+			<li><a ng-click="executeTask(true)">Forced execution (Ignore concurrency limit)</a></li>
+		</ul>
 	</div>
 </div>
 <div class="row">

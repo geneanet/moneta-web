@@ -251,11 +251,11 @@ monetaControllers.controller('TaskEditCtrl', ['$scope', '$http', '$stateParams',
 		}
 	};
 
-	$scope.executeTask = function() {
+	$scope.executeTask = function(force) {
 		if (confirm("You are about to execute the task \"" + $scope.task.name + "\" .")) {
 			$http({
 				method: 'EXECUTE',
-				url: config.backend + '/tasks/' + $scope.taskId
+				url: config.backend + '/tasks/' + $scope.taskId + ( force ? '?force=1' : '' )
 			})
 			.success(function(data, status, headers, config) {
 				alert.add({'type': 'success', 'message': 'The task has been executed.', 'timeout': 3000});

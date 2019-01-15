@@ -1,6 +1,6 @@
 var monetaControllers = angular.module('monetaControllers', ['monetaServices']);
 
-monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 'alert', function ($scope, $http, config, alert) {
+monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 'alert', 'clusterconfig', function ($scope, $http, config, alert, clusterconfig) {
 	$http.get(config.backend + '/cluster/status').success(function(data, status, headers, httpconfig) {
 		$scope.cluster = data;
 		$scope.processes = {}
@@ -28,6 +28,10 @@ monetaControllers.controller('ClusterStatusCtrl', ['$scope', '$http', 'config', 
 		$scope.tasks = data;
 	}).error(function(data, status, headers, config) {
 		alert.add({'type': 'alert', 'message': 'An error occured while fetching tasks, please try again !'});
+	});
+
+	$http.get(config.backend + '/executionsummary').success(function(data, status, headers) {
+		$scope.executionsummary = data;
 	});
 }]);
 

@@ -45,12 +45,21 @@
 					<th>Node</th>
 					<th>Task</th>
 					<th>Started</th>
+					<th>Last known duration</th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="process in processes">
 					<td>{{ ::process.node }}</td>
 					<td><a ng-href="#/tasks/{{ ::process.task }}/view">{{ ::tasks[process.task].name }}</a></td>
 					<td>{{ ::process.start_time | fromNow }}</td>
+					<td>
+						<div ng-if="!!executionsummary[process.task]">
+							{{ executionsummary[process.task].duration | formatDuration }}
+						</div>
+						<div ng-if="!executionsummary[process.task]">
+							<i>Not executed yet</i>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -139,6 +139,12 @@ monetaFilters.filter('formatDateTime', function() {
 	}
 });
 
+monetaFilters.filter('formatDateTimeShort', function() {
+	return function(date) {
+		return moment(date).format('DD/MM HH:mm:ss');
+	}
+});
+
 monetaFilters.filter('formatDuration', function() {
 	return function(duration) {
 		return moment.duration(duration * 1000).humanize();

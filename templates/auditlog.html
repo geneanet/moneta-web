@@ -24,7 +24,7 @@
 
     <div class="row" style="margin-bottom: 1rem">
         <div class="columns small-12">
-            <h4>{{count}} results</h4>
+            <h4>{{count.value}} results</h4>
         </div>
     </div>
 
@@ -58,14 +58,14 @@
                         <td>
                             <a href="" style="display: block"  ng-click="event.show = !event.show">
                                 <span ng-show="event['@level']" class="right label {{event['@level']}}">{{ levels_map[event['@level']] }}</span>
-                                <span style="font-weight: bold">{{ types_map[event['@type']] }}</span>
+                                <span style="font-weight: bold">{{ types_map[event['event_type']] }}</span>
                                 <span ng-show="!taskId">({{tasks[event.task].name}})</span>
                             </a>
                         </td>
                   </tr>
                   <tr ng-if="event.show" ng-repeat-end>
                       <td colspan="3">
-                          <div ng-include="'templates/events/' + event['@type'] + '.html'"></div>
+                          <div ng-include="'templates/events/' + event['event_type'] + '.html'"></div>
                       </td>
                   </tr>
               </tbody>

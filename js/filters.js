@@ -146,8 +146,36 @@ monetaFilters.filter('formatDateTimeShort', function() {
 });
 
 monetaFilters.filter('formatDuration', function() {
-	return function(duration) {
-		return moment.duration(duration * 1000).humanize();
+	return function (duration) {
+		units = ['d', 'h', 'min', 's', 'ms'];
+		units_s = [86400, 3600, 60, 1, 0.001];
+		output = '';
+
+		for (u = 0; u < units.length; u++) {
+			if (duration < units_s[u])
+				continue;
+					
+			t = Math.floor(duration / units_s[u])
+			output += t + units[u] + ' '
+			
+			duration %= units_s[u];
+		}
+
+		return output.trim();
+	}
+});
+
+monetaFilters.filter('formatBytes', function() {
+	return function(size) {
+		units = ['B', 'KB', 'MB', 'GB', 'TB'];
+		u = 0;
+
+		while (size > 1024) {
+			u++;
+			size /= 1024;
+		}
+
+		return size.toFixed(2) + ' ' + units[u];
 	}
 });
 

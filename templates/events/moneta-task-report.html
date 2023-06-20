@@ -12,15 +12,11 @@
     <tbody>
         <tr>
             <td class="mon-field">Status</td>
-            <td>{{event['status']}}</td>
+            <td>{{event['status']}} (return code {{event['returncode']}})</td>
         </tr>
         <tr>
-            <td class="mon-field" width="1">Start time</td>
-            <td>{{event['start_time'] | formatDateTime}}</td>
-        </tr>
-        <tr>
-            <td class="mon-field" width="1">End time</td>
-            <td>{{event['end_time'] | formatDateTime}}</td>
+            <td class="mon-field" width="1">Run time</td>
+            <td>From {{event['start_time'] | formatDateTime}} to {{event['end_time'] | formatDateTime}}</td>
         </tr>
         <tr>
             <td class="mon-field" width="1">Duration</td>
@@ -30,9 +26,13 @@
             <td class="mon-field" width="1">Node</td>
             <td>{{event['node']}}</td>
         </tr>
-        <tr>
-            <td class="mon-field" width="1">Return code</td>
-            <td>{{event['returncode']}}</td>
+        <tr ng-if="event['maxrss']">
+            <td class="mon-field" width="1">Memory used</td>
+            <td>{{event['maxrss'] | formatBytes}}</td>
+        </tr>
+        <tr ng-if="event['cputime_user']">
+            <td class="mon-field" width="1">CPU time used</td>
+            <td>{{event['cputime_user'] | formatDuration}} user; {{event['cputime_user'] | formatDuration}} system</td>
         </tr>
         <tr ng-if="event['output']">
             <td class="mon-field" width="1">Output</td>

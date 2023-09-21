@@ -2,8 +2,23 @@
 	color: inherit;
 }
 
-.mon-taglist, .mon-taskdescription {
+.mon-taglist, .mon-taskdescription, .mon-taskcommand {
 	margin-bottom: 0
+}
+
+.mon-taskcommand {
+	font-size: x-small;
+	color: gray;
+	text-overflow: ellipsis;
+
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+}
+
+.mon-taskcommand span {
+	font-family: monospace;
 }
 
 .mon-taskdescription {

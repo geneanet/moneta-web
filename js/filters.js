@@ -37,6 +37,11 @@ monetaFilters.filter('taskfilter', function ($filter) {
 			return S(task.name).latinise().toLowerCase().contains(title);
 		}
 
+		function match_command(task, command)
+		{
+			return S(task.command).latinise().toLowerCase().contains(command);
+		}
+
 		function xor(a,b)
 		{
 			return ( a || b ) && !( a && b );
@@ -72,6 +77,12 @@ monetaFilters.filter('taskfilter', function ($filter) {
 				{
 					item = item.substr(6);
 					if (xor(negate, !match_title(task, item)))
+						return;
+				}
+				else if (item.lastIndexOf('command:', 0) === 0)
+				{
+					item = item.substr(8);
+					if (xor(negate, !match_command(task, item)))
 						return;
 				}
 				else if (item.lastIndexOf('enabled:', 0) === 0)

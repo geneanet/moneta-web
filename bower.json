@@ -18,10 +18,10 @@
     "angular-animate": "~1.4.0",
     "moment": "~2.9.0",
     "angular-ui-router": "~0.2.15",
-    "angular-spinner": "https://github.com/tadodotcom/bower-angular-spinner.git#0.8.1",
     "angular-breadcrumb": "~0.4.1",
     "angular-foundation": "~0.8.0",
     "angular-paging": "~2.2.2",
+    "foundation-angular-datepicker": "https://github.com/bodhisatwag/foundation-angular-datepicker.git",
     "string": "~3.3.1"
   }
 }

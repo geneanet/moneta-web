@@ -6,7 +6,6 @@ var monetaApp = angular.module('monetaApp', [
 	'formValidation',
 	'tagBox',
 	'bzm-date-picker',
-	'ngLoadingSpinner',
 	'ngAnimate',
 	'ncy-angular-breadcrumb',
 	'mm.foundation',
